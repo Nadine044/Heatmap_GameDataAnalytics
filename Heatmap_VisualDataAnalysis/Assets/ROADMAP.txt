@@ -1,0 +1,33 @@
+DATA STRUCTURE
+
+- Specify what to analize
+- Create cs with Analysis Class
+	public class DataToExtract
+	{
+		vector3 deathSpot;
+		int deathsNum;
+		List<vector3> positionsToTrail; (save x frame on a list (??) and then create path connecting them)
+		etc...
+	}
+
+
+- Function to CREATE and WRITE JSON (extraction)
+- Function to SAVE JSON 
+- Function to LOAD JSON data to load it in the second scene
+
+- Heatmap Colliders (we have all data and we can load it)
+- Heatmap implementation:
+	- PATH (include TIME STILL IN SAME POSITION)
+	- DEATHS
+	- LIFE LOSTS (acid and falls included)
+	- HITS
+	- KILLS
+
+- Convert JSON to Excels
+- Analize them in KPIs software
+
+SCRIPTS
+- DataManager
+- JSON Reader/Write
+
+
