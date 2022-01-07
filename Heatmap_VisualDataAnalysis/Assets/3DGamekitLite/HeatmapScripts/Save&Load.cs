@@ -32,9 +32,9 @@ public class SaveAndLoad : MonoBehaviour
         string json = File.ReadAllText(Application.dataPath + "/KPIs_file.json");
         KPIs_info data = JsonUtility.FromJson<KPIs_info>(json);
 
-        /*Debug.Log(data.kill_pos[1]);
+        //Debug.Log(data.kill_pos[1]);
         Debug.Log(data.hit_pos[1]);
-        Debug.Log(data.acid_pos[1]);*/
+        //Debug.Log(data.acid_pos[1]);
         Debug.Log(data.death_pos[0]);
     }
 
