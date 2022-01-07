@@ -7,7 +7,7 @@ using Gamekit3D;
 public class EventManager : MonoBehaviour
 {
     public Damageable ellen;
-
+    public SaveAndLoad data;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +21,6 @@ public class EventManager : MonoBehaviour
     }
     void SaveDeathData()
     {
-        Debug.Log("MORISTEEE PENDEJOO");
+        data.all_data.death_pos.Add(ellen.transform.position);
     }
 }
