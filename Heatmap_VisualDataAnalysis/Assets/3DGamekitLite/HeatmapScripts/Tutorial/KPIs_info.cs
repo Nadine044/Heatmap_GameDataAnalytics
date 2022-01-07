@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 [System.Serializable]
 public class KPIs_info
 {
-    public float kill_pos;
-    public float hit_pos;
-    public float acid_pos;
-    public float death_pos;
+    public List<Vector3> kill_pos;
+    public List<Vector3> hit_pos;
+    public List<Vector3> acid_pos;
+    public List<Vector3> death_pos;
 }
