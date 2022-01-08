@@ -6,11 +6,13 @@ using System.IO;
 public class LoadVisualData : MonoBehaviour
 {
     public GameObject redCross;
+    public GameObject hit;
 
     [HideInInspector]
     public SaveAndLoad info;
 
     bool deathCrossEnable = true;
+    bool hitEnable = true;
 
     // Start is called before the first frame update
     public void Start()
@@ -29,13 +31,20 @@ public class LoadVisualData : MonoBehaviour
 
     public void DeathCross()
     {
+        if (info.all_data.hit_pos != null && hitEnable)
+        {
+            for (int i = 0; i < info.all_data.hit_pos.Count; i++)
+                Instantiate(hit, new Vector3(info.all_data.hit_pos[i].x, info.all_data.hit_pos[i].y, info.all_data.hit_pos[i].z), transform.rotation);
+        }
+
+
         if (info.all_data.death_pos != null && deathCrossEnable)
         {
             for (int i = 0; i < info.all_data.death_pos.Count; i++)
-            {
                 Instantiate(redCross, new Vector3(info.all_data.death_pos[i].x, info.all_data.death_pos[i].y, info.all_data.death_pos[i].z), transform.rotation);
-            }
         }
+
         deathCrossEnable = false;
+        hitEnable = false;
     }
 }
