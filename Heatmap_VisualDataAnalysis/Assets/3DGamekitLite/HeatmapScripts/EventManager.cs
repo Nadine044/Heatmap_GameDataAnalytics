@@ -8,6 +8,10 @@ public class EventManager : MonoBehaviour
 {
     public Damageable ellen;
     public SaveAndLoad data;
+
+    private float time = 0.0f;
+    float period = 3.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,19 @@ public class EventManager : MonoBehaviour
             }
         }
     }
+
+    public void Update()
+    {
+        time += Time.deltaTime;
+
+        if (time >= period)
+        {
+            time = time - period;
+            SavePath();
+            Debug.Log("HEY, IT HAS BEEN 3 SECONDS FROM NOW ON :)");
+        }
+    }
+
     void SaveDeathData()
     {
         data.all_data.death_pos.Add(ellen.transform.position);
@@ -39,5 +56,10 @@ public class EventManager : MonoBehaviour
     void SaveKillData()
     {
         data.all_data.kill_pos.Add(ellen.transform.position); //Pos of Ellen killing enemies
+    }
+
+    void SavePath()
+    {
+        data.all_data.path_pos.Add(ellen.transform.position);
     }
 }

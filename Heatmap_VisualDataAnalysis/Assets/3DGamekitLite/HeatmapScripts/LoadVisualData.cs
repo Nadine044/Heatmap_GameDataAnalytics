@@ -8,6 +8,7 @@ public class LoadVisualData : MonoBehaviour
     public GameObject skull;
     public GameObject hit;
     public GameObject killEnemy;
+    public GameObject path;
 
     [HideInInspector]
     public SaveAndLoad info;
@@ -15,6 +16,7 @@ public class LoadVisualData : MonoBehaviour
     bool deathEnabled = true;
     bool hitEnable = true;
     bool killEnemyEnabled = true;
+    bool pathEnabled = true;
 
 
     // Start is called before the first frame update
@@ -53,7 +55,15 @@ public class LoadVisualData : MonoBehaviour
                 Instantiate(skull, new Vector3(info.all_data.death_pos[i].x, info.all_data.death_pos[i].y, info.all_data.death_pos[i].z), transform.rotation);
         }
 
+        if (info.all_data.path_pos != null && pathEnabled)
+        {
+            for (int i = 0; i < info.all_data.path_pos.Count; i++)
+                Instantiate(path, new Vector3(info.all_data.path_pos[i].x, info.all_data.path_pos[i].y + 2.0f, info.all_data.path_pos[i].z), transform.rotation);
+        }
+
+        killEnemyEnabled = false;
         deathEnabled = false;
         hitEnable = false;
+        pathEnabled = false;
     }
 }
