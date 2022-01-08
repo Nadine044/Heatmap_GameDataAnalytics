@@ -9,7 +9,8 @@ public class LoadVisualData : MonoBehaviour
     public GameObject hit;
     public GameObject killEnemy;
     public GameObject path;
-    public List<Vector3> pathLines;
+    public List<Vector3> frontPathLines;
+    public List<Vector3> backPathLines;
 
     [HideInInspector]
     public SaveAndLoad info;
@@ -19,7 +20,8 @@ public class LoadVisualData : MonoBehaviour
     bool killEnemyEnabled = true;
     bool pathEnabled = true;
 
-    Vector3 frontPoint = new Vector3(0, 0, 0);
+    Vector3 frontPoint = Vector3.zero;
+    Vector3 backPoint = Vector3.zero;
 
     // Start is called before the first frame update
     public void Start()
@@ -34,11 +36,15 @@ public class LoadVisualData : MonoBehaviour
     public void Update()
     {
         LoadVisualData_Assets();
+        //frontPathLines and backPathLines lists already full after this previous function
 
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
-
-        for (int i = 0; i < pathLines.Count; i++)
-            Debug.DrawRay(pathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), forward, Color.green);
+        for (int i = 0; i < frontPathLines.Count; i++)
+        {
+            Vector3 dir = (frontPathLines[i] - backPathLines[i]).normalized;
+            Vector3 pos = transform.TransformDirection(dir) * Vector3.Distance(frontPathLines[i], backPathLines[i]);
+            Debug.DrawRay(frontPathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), -pos, Color.green);
+        }
+            
     }
 
     public void LoadVisualData_Assets()
@@ -64,10 +70,22 @@ public class LoadVisualData : MonoBehaviour
 
         if (info.all_data.path_pos != null && pathEnabled)
         {
+
             for (int i = 0; i < info.all_data.path_pos.Count; i++)
             {
                 frontPoint = info.all_data.path_pos[i];
-                pathLines.Add(frontPoint);
+                frontPathLines.Add(frontPoint);
+
+                if (i == 0)
+                {
+                    backPoint = frontPoint;
+                    backPathLines.Add(backPoint);
+                }
+                else
+                {
+                    backPoint = info.all_data.path_pos[i - 1];
+                    backPathLines.Add(backPoint);
+                }
 
                 Instantiate(path, new Vector3(info.all_data.path_pos[i].x, info.all_data.path_pos[i].y + 2.0f, info.all_data.path_pos[i].z), transform.rotation);
             }
