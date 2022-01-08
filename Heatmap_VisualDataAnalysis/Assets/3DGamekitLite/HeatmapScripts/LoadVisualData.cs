@@ -9,6 +9,7 @@ public class LoadVisualData : MonoBehaviour
     public GameObject hit;
     public GameObject killEnemy;
     public GameObject path;
+    public List<Vector3> pathLines;
 
     [HideInInspector]
     public SaveAndLoad info;
@@ -18,6 +19,7 @@ public class LoadVisualData : MonoBehaviour
     bool killEnemyEnabled = true;
     bool pathEnabled = true;
 
+    Vector3 frontPoint = new Vector3(0, 0, 0);
 
     // Start is called before the first frame update
     public void Start()
@@ -32,6 +34,11 @@ public class LoadVisualData : MonoBehaviour
     public void Update()
     {
         LoadVisualData_Assets();
+
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
+
+        for (int i = 0; i < pathLines.Count; i++)
+            Debug.DrawRay(pathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), forward, Color.green);
     }
 
     public void LoadVisualData_Assets()
@@ -58,7 +65,12 @@ public class LoadVisualData : MonoBehaviour
         if (info.all_data.path_pos != null && pathEnabled)
         {
             for (int i = 0; i < info.all_data.path_pos.Count; i++)
+            {
+                frontPoint = info.all_data.path_pos[i];
+                pathLines.Add(frontPoint);
+
                 Instantiate(path, new Vector3(info.all_data.path_pos[i].x, info.all_data.path_pos[i].y + 2.0f, info.all_data.path_pos[i].z), transform.rotation);
+            }
         }
 
         killEnemyEnabled = false;
