@@ -24,7 +24,6 @@ public class EventManager : MonoBehaviour
                 obj.OnDeath.AddListener(SaveKillData);
                 Debug.Log(obj.gameObject.name);
                 Debug.Log(obj.gameObject.transform.position);
-
             }
         }
     }
