@@ -90,9 +90,9 @@ public class LoadVisualData : MonoBehaviour
                 break;
 
             case Mode.killEnemy:
-                deathEnabled = true;
+                deathEnabled = false;
                 hitEnable = false;
-                killEnemyEnabled = false;
+                killEnemyEnabled = true;
                 pathEnabled = false;
                 break;
 

@@ -26,12 +26,12 @@ public class GridLogic2 : MonoBehaviour
             float red = (r * 2);
             if (red > 1)
                 red = 1;
-            float green = 1;
+            float blue = 1;
             if (r - 0.5 > 0)
             {
-                green -= ((r - 0.5f) * 2);
+                blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, green, 0,0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
         else if (visualData.MaxHitsCount > 0 && visualData.hitEnable)
         {
@@ -39,12 +39,12 @@ public class GridLogic2 : MonoBehaviour
             float red = (r * 2);
             if (red > 1)
                 red = 1;
-            float green = 1;
+            float blue = 1;
             if (r - 0.5 > 0)
             {
-                green -= ((r - 0.5f) * 2);
+                blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, green, 0, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
         else if (visualData.MaxKillsCount > 0 && visualData.killEnemyEnabled)
         {
@@ -52,12 +52,12 @@ public class GridLogic2 : MonoBehaviour
             float red = (r * 2);
             if (red > 1)
                 red = 1;
-            float green = 1;
+            float blue = 1;
             if (r - 0.5 > 0)
             {
-                green -= ((r - 0.5f) * 2);
+                blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, green, 0, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
         else if (visualData.MaxPathCount > 0 && visualData.pathEnabled)
         {
@@ -65,12 +65,12 @@ public class GridLogic2 : MonoBehaviour
             float red = (r * 2);
             if (red > 1)
                 red = 1;
-            float green = 1;
+            float blue = 1;
             if (r - 0.5 > 0)
             {
-                green -= ((r - 0.5f) * 2);
+                blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, green, 0, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
     }
 
