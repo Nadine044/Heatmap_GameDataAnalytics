@@ -46,6 +46,7 @@ public class EventManager : MonoBehaviour
 
     void SaveDeathData()
     {
+        data.all_data.hit_pos.Add(ellen.transform.position); //Save hit that kills Ellen (when she dies the program not calls the damage recive event by itself)
         data.all_data.death_pos.Add(ellen.transform.position);
     }
 

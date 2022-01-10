@@ -32,7 +32,7 @@ public class SaveAndLoad : MonoBehaviour
     public void LoadFromJson()
     {
         string json = File.ReadAllText(Application.dataPath + "/KPIs_file.json");
-        KPIs_info data = JsonUtility.FromJson<KPIs_info>(json);
+        all_data = JsonUtility.FromJson<KPIs_info>(json);
 
         Debug.Log("FILE LOADED!");
 

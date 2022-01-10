@@ -19,11 +19,10 @@ public class LoadVisualData : MonoBehaviour
     List<GameObject> grid;
 
 
-
     [Range(1, 30)]
     public int gridRange = 1;
     public int gridRangeOld = 0;
-    [HideInInspector]
+    //[HideInInspector]
     public SaveAndLoad info;
 
     bool deathEnabled = true;
@@ -36,11 +35,9 @@ public class LoadVisualData : MonoBehaviour
 
     // Start is called before the first frame update
     public void Start()
-    {
-        info = new SaveAndLoad();
+    {       
         grid = new List<GameObject>();
-        string json = File.ReadAllText(Application.dataPath + "/KPIs_file.json");
-        info.all_data = JsonUtility.FromJson<KPIs_info>(json);
+        info.LoadFromJson();
     }
 
     // Update is called once per frame
@@ -55,30 +52,42 @@ public class LoadVisualData : MonoBehaviour
             Vector3 pos = transform.TransformDirection(dir) * Vector3.Distance(frontPathLines[i], backPathLines[i]);
             Debug.DrawRay(frontPathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), -pos, Color.green);
         }
-
-        if(gridRange != gridRangeOld)
+        if (gridRange != gridRangeOld)
         {
-            if (grid.Count != 0)
-            {
-                foreach (GameObject obj in grid)
-                    Destroy(obj);
-                grid.Clear();
-            }
-
-            int totalCubes = gridRange * gridRange;
-            float newCubeScaleX = originalCubeForGrid.transform.localScale.x / gridRange;
-            float newCubeScaleZ = originalCubeForGrid.transform.localScale.z / gridRange;
-
-            for (int i = 0; i < totalCubes; ++i )
-            { 
-                GameObject newCube = GameObject.Instantiate(CubeForGridToReplicate, new Vector3 (originalCubeForGridPos.transform.position.x + (newCubeScaleX / 2) + ((newCubeScaleX) * (i%gridRange) ), originalCubeForGridPos.transform.position.y, originalCubeForGridPos.transform.position.z + (newCubeScaleZ / 2) + ((newCubeScaleZ) * (i / gridRange))), originalCubeForGrid.transform.rotation);
-                newCube.transform.localScale = new Vector3 (newCubeScaleX, newCube.transform.localScale.y, newCubeScaleZ);
-                grid.Add(newCube);
-            }
+            GridUpdate();
         }
-        
+    }
+
+    private void GridUpdate()
+    { 
+        ResetGrid();
+        CreateNewGrid();
+
         gridRangeOld = gridRange;
-            
+    }
+
+    private void CreateNewGrid()
+    {
+        int totalCubes = gridRange * gridRange;
+        float newCubeScaleX = originalCubeForGrid.transform.localScale.x / gridRange;
+        float newCubeScaleZ = originalCubeForGrid.transform.localScale.z / gridRange;
+
+        for (int i = 0; i < totalCubes; ++i)
+        {
+            GameObject newCube = GameObject.Instantiate(CubeForGridToReplicate, new Vector3(originalCubeForGridPos.transform.position.x + (newCubeScaleX / 2) + ((newCubeScaleX) * (i % gridRange)), originalCubeForGridPos.transform.position.y, originalCubeForGridPos.transform.position.z + (newCubeScaleZ / 2) + ((newCubeScaleZ) * (i / gridRange))), originalCubeForGrid.transform.rotation);
+            newCube.transform.localScale = new Vector3(newCubeScaleX, newCube.transform.localScale.y, newCubeScaleZ);
+            grid.Add(newCube);
+        }
+    }
+
+    private void ResetGrid()
+    {
+        if (grid.Count != 0)
+        {
+            foreach (GameObject obj in grid)
+                Destroy(obj);
+            grid.Clear();
+        }
     }
 
     public void LoadVisualData_Assets()
@@ -129,5 +138,15 @@ public class LoadVisualData : MonoBehaviour
         deathEnabled = false;
         hitEnable = false;
         pathEnabled = false;
+    }
+    void OnDrawGizmos()
+    {
+        // Draw a yellow sphere at the transform's position
+
+        for(int i = 0; i < info.all_data.kill_pos.Count; ++i)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(new Vector3(info.all_data.kill_pos[i].x, info.all_data.kill_pos[i].y +1, info.all_data.kill_pos[i].z), 3);
+        }
     }
 }

@@ -1165,6 +1165,7 @@ GameObject:
   - component: {fileID: 255511677}
   - component: {fileID: 255511676}
   - component: {fileID: 255511675}
+  - component: {fileID: 255511679}
   m_Layer: 0
   m_Name: CubeReplicate
   m_TagString: Untagged
@@ -1249,6 +1250,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &255511679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255511674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02514f20c572a8e4bb81de5156c9ef2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathsCount: 0
+  hitsCount: 0
+  killsCount: 0
+  pathCount: 0
+  visualData: {fileID: 300569214}
 --- !u!1 &300569212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1322,7 @@ MonoBehaviour:
   originalCubeForGridPos: {fileID: 2103655815}
   gridRange: 1
   gridRangeOld: 0
-  info: {fileID: 0}
+  info: {fileID: 555772295}
 --- !u!1 &372184480
 GameObject:
   m_ObjectHideFlags: 0
