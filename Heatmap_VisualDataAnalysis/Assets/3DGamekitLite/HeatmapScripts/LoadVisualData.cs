@@ -9,6 +9,8 @@ public class LoadVisualData : MonoBehaviour
     public GameObject hit;
     public GameObject killEnemy;
     public GameObject path;
+    public GameObject arrow;
+
     public List<Vector3> frontPathLines;
     public List<Vector3> backPathLines;
 
@@ -35,6 +37,7 @@ public class LoadVisualData : MonoBehaviour
     public bool hitEnable = false;
     public bool killEnemyEnabled = false;
     public bool pathEnabled = false;
+    public bool arrowsEnabled = false;
     enum Mode {death = 0, hit, killEnemy, path }
 
     [SerializeField] Mode currentMode = Mode.death;
@@ -52,15 +55,9 @@ public class LoadVisualData : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        //LoadVisualData_Assets();
+        LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
-        for (int i = 0; i < frontPathLines.Count; i++)
-        {
-            Vector3 dir = (frontPathLines[i] - backPathLines[i]).normalized;
-            Vector3 pos = transform.TransformDirection(dir) * Vector3.Distance(frontPathLines[i], backPathLines[i]);
-            Debug.DrawRay(frontPathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), -pos, Color.green);
-        }
         if (gridRange != gridRangeOld)
         {
             GridUpdate();
@@ -69,6 +66,22 @@ public class LoadVisualData : MonoBehaviour
         {
             ChangeMode(currentMode);
             oldMode = currentMode;
+        }
+
+        if (arrowsEnabled)
+        {
+            for (int i = 0; i < frontPathLines.Count; i++)
+            {
+                Vector3 dir = (frontPathLines[i] - backPathLines[i]).normalized;
+                Vector3 pos = transform.TransformDirection(dir) * Vector3.Distance(frontPathLines[i], backPathLines[i]);
+                //Debug.DrawRay(frontPathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), -pos, Color.green);
+
+                if (i <= frontPathLines.Count)
+                {
+                    Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), transform.rotation);
+                    arrowsEnabled = false;
+                }
+            }
         }
     }
     private void ChangeMode(Mode newMode)
@@ -80,6 +93,7 @@ public class LoadVisualData : MonoBehaviour
                 hitEnable = false;
                 killEnemyEnabled = false;
                 pathEnabled = false;
+                arrowsEnabled = false;
                 break;
 
             case Mode.hit:
@@ -87,6 +101,7 @@ public class LoadVisualData : MonoBehaviour
                 hitEnable = true;
                 killEnemyEnabled = false;
                 pathEnabled = false;
+                arrowsEnabled = false;
                 break;
 
             case Mode.killEnemy:
@@ -94,6 +109,7 @@ public class LoadVisualData : MonoBehaviour
                 hitEnable = false;
                 killEnemyEnabled = true;
                 pathEnabled = false;
+                arrowsEnabled = false;
                 break;
 
             case Mode.path:
@@ -101,6 +117,7 @@ public class LoadVisualData : MonoBehaviour
                 hitEnable = false;
                 killEnemyEnabled = false;
                 pathEnabled = true;
+                arrowsEnabled = true;
                 break;
         }
 
@@ -207,14 +224,14 @@ public class LoadVisualData : MonoBehaviour
         hitEnable = false;
         pathEnabled = false;
     }
-    void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
+    //void OnDrawGizmos()
+    //{
+    //    // Draw a yellow sphere at the transform's position
 
-        for(int i = 0; i < info.all_data.kill_pos.Count; ++i)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(new Vector3(info.all_data.kill_pos[i].x, info.all_data.kill_pos[i].y +1, info.all_data.kill_pos[i].z), 3);
-        }
-    }
+    //    for(int i = 0; i < info.all_data.kill_pos.Count; ++i)
+    //    {
+    //        Gizmos.color = Color.yellow;
+    //        Gizmos.DrawSphere(new Vector3(info.all_data.kill_pos[i].x, info.all_data.kill_pos[i].y +1, info.all_data.kill_pos[i].z), 3);
+    //    }
+    //}
 }
