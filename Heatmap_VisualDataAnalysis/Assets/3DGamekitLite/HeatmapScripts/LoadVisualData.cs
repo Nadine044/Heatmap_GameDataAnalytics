@@ -12,6 +12,17 @@ public class LoadVisualData : MonoBehaviour
     public List<Vector3> frontPathLines;
     public List<Vector3> backPathLines;
 
+    public GameObject originalCubeForGrid;
+    public GameObject CubeForGridToReplicate;
+    public GameObject originalCubeForGridPos;
+
+    List<GameObject> grid;
+
+
+
+    [Range(1, 30)]
+    public int gridRange = 1;
+    public int gridRangeOld = 0;
     [HideInInspector]
     public SaveAndLoad info;
 
@@ -27,7 +38,7 @@ public class LoadVisualData : MonoBehaviour
     public void Start()
     {
         info = new SaveAndLoad();
-
+        grid = new List<GameObject>();
         string json = File.ReadAllText(Application.dataPath + "/KPIs_file.json");
         info.all_data = JsonUtility.FromJson<KPIs_info>(json);
     }
@@ -35,7 +46,7 @@ public class LoadVisualData : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        LoadVisualData_Assets();
+        //LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
         for (int i = 0; i < frontPathLines.Count; i++)
@@ -44,12 +55,35 @@ public class LoadVisualData : MonoBehaviour
             Vector3 pos = transform.TransformDirection(dir) * Vector3.Distance(frontPathLines[i], backPathLines[i]);
             Debug.DrawRay(frontPathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), -pos, Color.green);
         }
+
+        if(gridRange != gridRangeOld)
+        {
+            if (grid.Count != 0)
+            {
+                foreach (GameObject obj in grid)
+                    Destroy(obj);
+                grid.Clear();
+            }
+
+            int totalCubes = gridRange * gridRange;
+            float newCubeScaleX = originalCubeForGrid.transform.localScale.x / gridRange;
+            float newCubeScaleZ = originalCubeForGrid.transform.localScale.z / gridRange;
+
+            for (int i = 0; i < totalCubes; ++i )
+            { 
+                GameObject newCube = GameObject.Instantiate(CubeForGridToReplicate, new Vector3 (originalCubeForGridPos.transform.position.x + (newCubeScaleX / 2) + ((newCubeScaleX) * (i%gridRange) ), originalCubeForGridPos.transform.position.y, originalCubeForGridPos.transform.position.z + (newCubeScaleZ / 2) + ((newCubeScaleZ) * (i / gridRange))), originalCubeForGrid.transform.rotation);
+                newCube.transform.localScale = new Vector3 (newCubeScaleX, newCube.transform.localScale.y, newCubeScaleZ);
+                grid.Add(newCube);
+            }
+        }
+        
+        gridRangeOld = gridRange;
             
     }
 
     public void LoadVisualData_Assets()
     {
-        if (info.all_data.kill_pos != null && killEnemyEnabled)
+        if (info.all_data.kill_pos != null && killEnemyEnabled) 
         {
             for (int i = 0; i < info.all_data.kill_pos.Count; i++)
                 Instantiate(killEnemy, new Vector3(info.all_data.kill_pos[i].x, info.all_data.kill_pos[i].y, info.all_data.kill_pos[i].z), transform.rotation);
