@@ -1245,7 +1245,7 @@ Transform:
   m_GameObject: {fileID: 255511674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 129.9, y: 3.03, z: 26.2}
-  m_LocalScale: {x: 1, y: 4.064867, z: 1}
+  m_LocalScale: {x: 1, y: 24.236362, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -1322,7 +1322,16 @@ MonoBehaviour:
   originalCubeForGridPos: {fileID: 2103655815}
   gridRange: 1
   gridRangeOld: 0
+  MaxDeathsCount: 0
+  MaxHitsCount: 0
+  MaxKillsCount: 0
+  MaxPathCount: 0
   info: {fileID: 555772295}
+  deathEnabled: 1
+  hitEnable: 0
+  killEnemyEnabled: 0
+  pathEnabled: 0
+  currentMode: 0
 --- !u!1 &372184480
 GameObject:
   m_ObjectHideFlags: 0
