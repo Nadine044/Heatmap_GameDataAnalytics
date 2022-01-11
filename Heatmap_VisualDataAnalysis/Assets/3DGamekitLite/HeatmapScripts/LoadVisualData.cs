@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class LoadVisualData : MonoBehaviour
@@ -41,7 +42,12 @@ public class LoadVisualData : MonoBehaviour
     enum Mode {death = 0, hit, killEnemy, path }
 
     [SerializeField] Mode currentMode = Mode.death;
-    Mode oldMode = Mode.death; // When buttons are implemented this will not be needed.
+    Mode oldMode = Mode.death; // When buttons wll be implemented this will not be needed.
+
+    public KPIs_info currentData;
+
+    public Dropdown currentGame;
+    List<string> DropGames = new List<string>();
 
     Vector3 frontPoint = Vector3.zero;
     Vector3 backPoint = Vector3.zero;
@@ -49,7 +55,24 @@ public class LoadVisualData : MonoBehaviour
     private void Awake()
     {
         grid = new List<GameObject>();
+
         info.LoadFromJson();
+        currentGame.ClearOptions();
+        if (info.all_games.games.Count == 0)
+        {
+            Debug.Log("No games are saved!!");
+
+            DropGames = new List<string> { "No game loaded" };
+        }
+        else
+        {
+            foreach (KPIs_info gameIterator in info.all_games.games)
+            {
+                DropGames.Add("Game Number" + gameIterator.game_number.ToString());
+            }
+        }
+
+        currentGame.AddOptions(DropGames);
     }
 
     // Update is called once per frame
@@ -177,31 +200,31 @@ public class LoadVisualData : MonoBehaviour
 
     public void LoadVisualData_Assets()
     {
-        if (info.all_data.kill_pos != null && killEnemyEnabled) 
+        if (currentData.kill_pos != null && killEnemyEnabled) 
         {
-            for (int i = 0; i < info.all_data.kill_pos.Count; i++)
-                Instantiate(killEnemy, new Vector3(info.all_data.kill_pos[i].x, info.all_data.kill_pos[i].y, info.all_data.kill_pos[i].z), transform.rotation);
+            for (int i = 0; i < currentData.kill_pos.Count; i++)
+                Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation);
         }
 
-        if (info.all_data.hit_pos != null && hitEnable)
+        if (currentData.hit_pos != null && hitEnable)
         {
-            for (int i = 0; i < info.all_data.hit_pos.Count; i++)
-                Instantiate(hit, new Vector3(info.all_data.hit_pos[i].x, info.all_data.hit_pos[i].y, info.all_data.hit_pos[i].z), transform.rotation);
+            for (int i = 0; i < currentData.hit_pos.Count; i++)
+                Instantiate(hit, new Vector3(currentData.hit_pos[i].x, currentData.hit_pos[i].y, currentData.hit_pos[i].z), transform.rotation);
         }
 
 
-        if (info.all_data.death_pos != null && deathEnabled)
+        if (currentData.death_pos != null && deathEnabled)
         {
-            for (int i = 0; i < info.all_data.death_pos.Count; i++)
-                Instantiate(skull, new Vector3(info.all_data.death_pos[i].x, info.all_data.death_pos[i].y, info.all_data.death_pos[i].z), transform.rotation);
+            for (int i = 0; i < currentData.death_pos.Count; i++)
+                Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation);
         }
 
-        if (info.all_data.path_pos != null && pathEnabled)
+        if (currentData.path_pos != null && pathEnabled)
         {
 
-            for (int i = 0; i < info.all_data.path_pos.Count; i++)
+            for (int i = 0; i < currentData.path_pos.Count; i++)
             {
-                frontPoint = info.all_data.path_pos[i];
+                frontPoint = currentData.path_pos[i];
                 frontPathLines.Add(frontPoint);
 
                 if (i == 0)
@@ -211,11 +234,11 @@ public class LoadVisualData : MonoBehaviour
                 }
                 else
                 {
-                    backPoint = info.all_data.path_pos[i - 1];
+                    backPoint = currentData.path_pos[i - 1];
                     backPathLines.Add(backPoint);
                 }
 
-                Instantiate(path, new Vector3(info.all_data.path_pos[i].x, info.all_data.path_pos[i].y + 2.0f, info.all_data.path_pos[i].z), transform.rotation);
+                Instantiate(path, new Vector3(currentData.path_pos[i].x, currentData.path_pos[i].y + 2.0f, currentData.path_pos[i].z), transform.rotation);
             }
         }
 
@@ -228,10 +251,10 @@ public class LoadVisualData : MonoBehaviour
     //{
     //    // Draw a yellow sphere at the transform's position
 
-    //    for(int i = 0; i < info.all_data.kill_pos.Count; ++i)
+    //    for(int i = 0; i < currentData.kill_pos.Count; ++i)
     //    {
     //        Gizmos.color = Color.yellow;
-    //        Gizmos.DrawSphere(new Vector3(info.all_data.kill_pos[i].x, info.all_data.kill_pos[i].y +1, info.all_data.kill_pos[i].z), 3);
+    //        Gizmos.DrawSphere(new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y +1, currentData.kill_pos[i].z), 3);
     //    }
     //}
 }

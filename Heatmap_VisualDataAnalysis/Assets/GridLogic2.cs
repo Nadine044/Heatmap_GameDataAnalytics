@@ -82,7 +82,7 @@ public class GridLogic2 : MonoBehaviour
 
     public void SetCountersFromData()
     {
-        foreach (Vector3 pos in visualData.info.all_data.kill_pos)
+        foreach (Vector3 pos in visualData.currentData.kill_pos)
         {
             Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
             foreach (Collider col in hitColliders)
@@ -92,7 +92,7 @@ public class GridLogic2 : MonoBehaviour
             }
         }
 
-        foreach (Vector3 pos in visualData.info.all_data.death_pos)
+        foreach (Vector3 pos in visualData.currentData.death_pos)
         {
             Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
             foreach (Collider col in hitColliders)
@@ -102,7 +102,7 @@ public class GridLogic2 : MonoBehaviour
             }
         }
 
-        foreach (Vector3 pos in visualData.info.all_data.hit_pos)
+        foreach (Vector3 pos in visualData.currentData.hit_pos)
         {
             Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
             foreach (Collider col in hitColliders)
@@ -112,7 +112,7 @@ public class GridLogic2 : MonoBehaviour
             }
         }
 
-        foreach (Vector3 pos in visualData.info.all_data.path_pos)
+        foreach (Vector3 pos in visualData.currentData.path_pos)
         {
             Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
             foreach (Collider col in hitColliders)
