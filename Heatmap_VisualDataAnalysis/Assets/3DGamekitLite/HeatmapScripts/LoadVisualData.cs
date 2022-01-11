@@ -25,6 +25,8 @@ public class LoadVisualData : MonoBehaviour
     //Arrows
     public List<Vector3> frontPathLines;
     public List<Vector3> backPathLines;
+    public List<GameObject> allPathBalls;
+
     Vector3 frontPoint = Vector3.zero;
     Vector3 backPoint = Vector3.zero;
 
@@ -104,8 +106,6 @@ public class LoadVisualData : MonoBehaviour
         LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
-
-
         if (arrowsEnabled)
         {
             for (int i = 0; i < frontPathLines.Count; i++)
@@ -116,7 +116,17 @@ public class LoadVisualData : MonoBehaviour
 
                 if (i <= frontPathLines.Count)
                 {
-                    //Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), transform.rotation);
+                    GameObject go = Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
+                    
+                    if (i + 1 == frontPathLines.Count)
+                    {
+                        Debug.Log("No more arrows to draw");
+                    }
+                    else
+                    {
+                        go.transform.LookAt(allPathBalls[i + 1].transform, allPathBalls[i + 1].transform.position);
+                        //go.transform.rotation.z;
+                    }
                     arrowsEnabled = false;
                 }
             }
@@ -273,7 +283,7 @@ public class LoadVisualData : MonoBehaviour
 
     public void LoadVisualData_Assets()
     {
-        /*if (currentData.kill_pos != null && killEnemyEnabled) 
+        if (currentData.kill_pos != null && killEnemyEnabled)
         {
             for (int i = 0; i < currentData.kill_pos.Count; i++)
                 Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation);
@@ -290,7 +300,7 @@ public class LoadVisualData : MonoBehaviour
         {
             for (int i = 0; i < currentData.death_pos.Count; i++)
                 Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation);
-        }*/
+        }
 
         if (currentData.paths != null && pathEnabled)
         {
@@ -312,7 +322,9 @@ public class LoadVisualData : MonoBehaviour
                         backPathLines.Add(backPoint);
                     }
 
-                    pathsInstantiates.Add(Instantiate(path, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation));
+                    GameObject go = Instantiate(path, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
+                    pathsInstantiates.Add(go);
+                    allPathBalls.Add(go);
                 }
             }
         }
