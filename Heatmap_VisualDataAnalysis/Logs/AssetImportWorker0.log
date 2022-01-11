@@ -6825,3 +6825,45 @@ Received Import Request.
   path: Assets/3DGamekitLite/HeatmapScripts/Prefabs/Falls_Prefab.prefab
   artifactKey: Guid(d7c2788561377a548a5d5a78698d2ed9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/3DGamekitLite/HeatmapScripts/Prefabs/Falls_Prefab.prefab using Guid(d7c2788561377a548a5d5a78698d2ed9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd99c214a704284b67ee40db8196a307c') in 0.029477 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 329.090664 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend
+  artifactKey: Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend using Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '438fa33fc86d6df6f602c918f76a303a') in 0.035597 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.742380 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend
+  artifactKey: Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend using Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '436a1de2c4a3a586c6e964473a8122fa') in 0.025590 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 21.369484 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend
+  artifactKey: Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend using Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '542da8fdc656c04b08f0e027fe33d430') in 0.036367 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.809942 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/Materials/Purple.mat
+  artifactKey: Guid(deb39c2d4c033fc4590e1074caf479cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/Materials/Purple.mat using Guid(deb39c2d4c033fc4590e1074caf479cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '47e1dea57682582791107b23dbdd8e65') in 0.011837 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.266792 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/Materials/Yellow_Acid.mat
+  artifactKey: Guid(f90feab37729be0498fd89e316745624) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/Materials/Yellow_Acid.mat using Guid(f90feab37729be0498fd89e316745624) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a09dad80ab476f6b5199972cd2aac14c') in 0.012725 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 29.943555 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Prefabs/AcidDeath Variant.prefab
+  artifactKey: Guid(9a849d8deeb945843a546309ee843c41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Prefabs/AcidDeath Variant.prefab using Guid(9a849d8deeb945843a546309ee843c41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20769c95294267d530e074df3b266d6f') in 0.013198 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.682195 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Prefabs/Acid_Death.prefab
+  artifactKey: Guid(9a849d8deeb945843a546309ee843c41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Prefabs/Acid_Death.prefab using Guid(9a849d8deeb945843a546309ee843c41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9721dd2f34e0ba6b2efd730ce28d5f7') in 0.013465 seconds 
