@@ -15,6 +15,8 @@ public class LoadVisualData : MonoBehaviour
     public GameObject killEnemy;
     public GameObject ball;
     public GameObject arrow;
+    public GameObject fall;
+    public GameObject acid;
 
     List<GameObject> arrows = new List<GameObject>();
     //List<GameObject> deaths = new List<GameObject>();
@@ -283,6 +285,18 @@ public class LoadVisualData : MonoBehaviour
         {
             for (int i = 0; i < currentData.death_pos.Count; i++)
                 Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation);
+        }
+
+        if (currentData.fall_pos != null && fallEnabled)
+        {
+            for (int i = 0; i < currentData.fall_pos.Count; i++)
+                Instantiate(fall, new Vector3(currentData.fall_pos[i].x, currentData.fall_pos[i].y + 5.0f, currentData.fall_pos[i].z), transform.rotation);
+        }
+
+        if (currentData.acid_pos != null && acidEnabled)
+        {
+            for (int i = 0; i < currentData.acid_pos.Count; i++)
+                Instantiate(acid, new Vector3(currentData.acid_pos[i].x, currentData.acid_pos[i].y, currentData.acid_pos[i].z), transform.rotation);
         }
 
         if (currentData.paths != null && pathEnabled)

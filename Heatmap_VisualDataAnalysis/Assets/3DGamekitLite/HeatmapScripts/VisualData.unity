@@ -1874,6 +1874,8 @@ MonoBehaviour:
     type: 3}
   ball: {fileID: 2222271104742070094, guid: a0570157af610bd4a8171d9241b075bd, type: 3}
   arrow: {fileID: 3245333838228497933, guid: 63c12976314d40542be48bbf236cfa36, type: 3}
+  fall: {fileID: 9100673940835773185, guid: d7c2788561377a548a5d5a78698d2ed9, type: 3}
+  acid: {fileID: 639950412918786640, guid: 9a849d8deeb945843a546309ee843c41, type: 3}
   CubeForGridToReplicate: {fileID: 255511674}
   currentData:
     kill_pos: []
@@ -1884,8 +1886,6 @@ MonoBehaviour:
     paths: []
     game_number: -1
   saveFile: {fileID: 555772295}
-  frontPathLines: []
-  backPathLines: []
   allPathBalls: []
   subdivisions: 1
   originalCubeForGrid: {fileID: 485733455}
