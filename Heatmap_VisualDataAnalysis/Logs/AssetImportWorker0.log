@@ -276,3 +276,100 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 96.165039 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend
+  artifactKey: Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend using Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa916ed36111379aaa69a4503ba2478b') in 0.080561 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006971 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\nadig\OneDrive\Documentos\GitHub\Heatmap_GameDataAnalytics\Heatmap_VisualDataAnalysis\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\nadig\OneDrive\Documentos\GitHub\Heatmap_GameDataAnalytics\Heatmap_VisualDataAnalysis\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.99 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Warning: Annotation not found!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.ProBuilder.EditorUtility:SetGizmoIconEnabled (System.Type,bool) (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs:575)
+UnityEditor.ProBuilder.HierarchyListener:.cctor () (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/HierarchyListener.cs:21)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+[Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs line 575]
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.169 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1169ms)
+		BeginReloadAssembly (127ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (43ms)
+		EndReloadAssembly (981ms)
+			LoadAssemblies (88ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (353ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (63ms)
+			SetupLoadedEditorAssemblies (373ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (80ms)
+				ProcessInitializeOnLoadAttributes (269ms)
+				ProcessInitializeOnLoadMethodAttributes (9ms)
+				AfterProcessingInitializeOnLoad (6ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.99 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3998 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 226.8 MB.
+System memory in use after: 227.1 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 4576.
+Total: 3.124200 ms (FindLiveObjects: 0.483600 ms CreateObjectMapping: 0.103100 ms MarkObjects: 2.513800 ms  DeleteObjects: 0.022700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 128.558526 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend
+  artifactKey: Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend using Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c83e94c2f7cb9ebf47957ed4031e888f') in 0.081813 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 217.781824 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend
+  artifactKey: Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/AcidDeath.blend using Guid(fdd20c6cba955ce4fb94dfad30c8a604) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa3d252dcbde78d33a3a34a909efa366') in 0.023096 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 50.715565 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/EllenDeath.blend
+  artifactKey: Guid(0077fe9dc3fad2d42961cc01b3506fa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/EllenDeath.blend using Guid(0077fe9dc3fad2d42961cc01b3506fa2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0de82126762f467e291d745ef883f68') in 0.094175 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 21.713117 seconds.
+  path: Assets/3DGamekitLite/HeatmapScripts/Assets/Hits.blend
+  artifactKey: Guid(9cbf68256a05b1542a6dbd4365979bab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DGamekitLite/HeatmapScripts/Assets/Hits.blend using Guid(9cbf68256a05b1542a6dbd4365979bab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2845ee540a221e3e4776d9331a9dff23') in 0.093384 seconds 
