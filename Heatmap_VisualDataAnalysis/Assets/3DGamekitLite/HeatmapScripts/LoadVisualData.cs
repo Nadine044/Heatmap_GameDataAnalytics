@@ -124,8 +124,7 @@ public class LoadVisualData : MonoBehaviour
                     }
                     else
                     {
-                        go.transform.LookAt(allPathBalls[i + 1].transform, allPathBalls[i + 1].transform.position);
-                        //go.transform.rotation.z;
+                        go.transform.LookAt(new Vector3(allPathBalls[i + 1].transform.position.x, allPathBalls[i + 1].transform.position.y, allPathBalls[i + 1].transform.position.z));
                     }
                     arrowsEnabled = false;
                 }
