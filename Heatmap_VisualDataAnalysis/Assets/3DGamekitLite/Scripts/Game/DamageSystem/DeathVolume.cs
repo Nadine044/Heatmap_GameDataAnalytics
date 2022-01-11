@@ -15,6 +15,11 @@ namespace Gamekit3D
             var pc = other.GetComponent<PlayerController>();
             if (pc != null)
             {
+                if (this.gameObject.layer == 16/*Enviroment == Acid*/)
+                    pc.gameObject.GetComponent<Damageable>().OnDeathAcid.Invoke();
+                else if(this.gameObject.layer == 28/*Collider == fuera del mapa*/)
+                    pc.gameObject.GetComponent<Damageable>().OnDeathFall.Invoke();
+
                 pc.Die(new Damageable.DamageMessage());
             }
             if (audio != null)

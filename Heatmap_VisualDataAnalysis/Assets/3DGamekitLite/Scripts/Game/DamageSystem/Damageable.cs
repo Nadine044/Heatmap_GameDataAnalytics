@@ -26,7 +26,7 @@ namespace Gamekit3D
         public bool isInvulnerable;
         public int currentHitPoints { get; private set; }
 
-        public UnityEvent OnDeath, OnReceiveDamage, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage;
+        public UnityEvent OnDeath, OnReceiveDamage, OnHitWhileInvulnerable, OnBecomeVulnerable, OnResetDamage, OnDeathFall, OnDeathAcid;
 
         [Tooltip("When this gameObject is damaged, these other gameObjects are notified.")]
         [EnforceType(typeof(Message.IMessageReceiver))]

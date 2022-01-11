@@ -10,7 +10,7 @@ public class EventManager : MonoBehaviour
     public SaveAndLoad data;
 
     private float time = 0.0f;
-    float period = 3.0f;
+    float period = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,8 @@ public class EventManager : MonoBehaviour
         //subscribe to Ellen "death" and "hit" events.
         ellen.OnDeath.AddListener(SaveDeathData);
         ellen.OnReceiveDamage.AddListener(SaveHitData);
+        ellen.OnDeathFall.AddListener(SaveDeathFallData);
+        ellen.OnDeathAcid.AddListener(SaveDeathAcidData);
 
         //subscribe to enemies "death" event wich will be the kill position of ellen.
         Damageable[] AllObjects = FindObjectsOfType<Damageable>();
@@ -62,5 +64,15 @@ public class EventManager : MonoBehaviour
     void SavePath()
     {
         data.all_data.path_pos.Add(ellen.transform.position);
+    }
+
+    void SaveDeathAcidData()
+    {
+        data.all_data.acid_pos.Add(ellen.transform.position);
+    }
+
+    void SaveDeathFallData()
+    {
+        data.all_data.fall_pos.Add(ellen.transform.position);
     }
 }
