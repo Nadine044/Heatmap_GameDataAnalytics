@@ -6,53 +6,62 @@ using System.IO;
 
 public class LoadVisualData : MonoBehaviour
 {
+    enum Mode { death = 0, hit, killEnemy, path }
+
+
+    //------ Prefabs to instantiate ------
     public GameObject skull;
     public GameObject hit;
     public GameObject killEnemy;
     public GameObject path;
     public GameObject arrow;
 
+    public GameObject CubeForGridToReplicate;
+
+    //------ Data ------
+    public KPIs_info currentData;
+    public SaveAndLoad saveFile;
+
+    //Arrows
     public List<Vector3> frontPathLines;
     public List<Vector3> backPathLines;
+    Vector3 frontPoint = Vector3.zero;
+    Vector3 backPoint = Vector3.zero;
 
-    public GameObject originalCubeForGrid;
-    public GameObject CubeForGridToReplicate;
-    public GameObject originalCubeForGridPos;
+    //For the grid
+    [Range(1, 30)]
+    public int subdivisions = 1;
 
     List<GameObject> grid;
 
+    public GameObject originalCubeForGrid;
+    public GameObject originalCubeForGridPos;
 
-    [Range(1, 30)]
-    public int gridRange = 1;
-    public int gridRangeOld = 0;
-
+    //Counters
     public int MaxDeathsCount = 0;
     public int MaxHitsCount = 0;
     public int MaxKillsCount = 0;
     public int MaxPathCount = 0;
 
-    //[HideInInspector]
-    public SaveAndLoad saveFile;
-
+    //bools mode - Maybe will not be needed with the dropdown, could be eliminated.
     public bool deathEnabled = true;
     public bool hitEnable = false;
     public bool killEnemyEnabled = false;
     public bool pathEnabled = false;
     public bool arrowsEnabled = false;
-    enum Mode {death = 0, hit, killEnemy, path }
 
     [SerializeField] Mode currentMode = Mode.death;
-    Mode oldMode = Mode.death; // When buttons wll be implemented this will not be needed.
 
-    public KPIs_info currentData;
 
+    //------ UI elements ------
     public Dropdown currentGameDropdown;
+    public Dropdown currentModeDropdown;
     List<string> DropGames = new List<string>();
     public Toggle showAllGames;
+    public Slider subdivisionsSlider;
+    public Text subdivisionsText;
 
-    Vector3 frontPoint = Vector3.zero;
-    Vector3 backPoint = Vector3.zero;
-
+    //------ FUNCTIONS -------
     private void Start()
     {
         grid = new List<GameObject>();
@@ -77,6 +86,10 @@ public class LoadVisualData : MonoBehaviour
         currentGameDropdown.AddOptions(DropGames);
         currentGameDropdown.onValueChanged.AddListener(delegate { CurrentGameChanged();});
         showAllGames.onValueChanged.AddListener(delegate { ShowAllGamesChanged(); });
+        currentModeDropdown.onValueChanged.AddListener(delegate{ ChangeMode(); });
+        subdivisionsSlider.onValueChanged.AddListener(delegate { GridUpdate(); });
+
+        CreateNewGrid();
     }
 
     // Update is called once per frame
@@ -85,15 +98,7 @@ public class LoadVisualData : MonoBehaviour
         //LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
-        if (gridRange != gridRangeOld)
-        {
-            GridUpdate();
-        }
-        if(currentMode != oldMode)
-        {
-            ChangeMode(currentMode);
-            oldMode = currentMode;
-        }
+
 
         if (arrowsEnabled)
         {
@@ -111,9 +116,11 @@ public class LoadVisualData : MonoBehaviour
             }
         }
     }
-    private void ChangeMode(Mode newMode)
+    private void ChangeMode()
     {
-        switch(newMode)
+        currentMode = (Mode)currentModeDropdown.value;
+
+        switch (currentMode)
         {
             case Mode.death:
                 deathEnabled = true;
@@ -148,27 +155,19 @@ public class LoadVisualData : MonoBehaviour
                 break;
         }
 
-        foreach(GameObject cube in grid)
+        foreach (GameObject cube in grid)
             cube.GetComponent<GridLogic2>().SetColorFromMaxData();
-        
-    }
-    private void GridUpdate()
-    { 
-        ResetGrid();
-        CreateNewGrid();
 
-        gridRangeOld = gridRange;
     }
-
     private void CreateNewGrid()
     {
-        int totalCubes = gridRange * gridRange;
-        float newCubeScaleX = originalCubeForGrid.transform.localScale.x / gridRange;
-        float newCubeScaleZ = originalCubeForGrid.transform.localScale.z / gridRange;
+        int totalCubes = subdivisions * subdivisions;
+        float newCubeScaleX = originalCubeForGrid.transform.localScale.x / subdivisions;
+        float newCubeScaleZ = originalCubeForGrid.transform.localScale.z / subdivisions;
 
         for (int i = 0; i < totalCubes; ++i)
         {
-            GameObject newCube = GameObject.Instantiate(CubeForGridToReplicate, new Vector3(originalCubeForGridPos.transform.position.x + (newCubeScaleX / 2) + ((newCubeScaleX) * (i % gridRange)), originalCubeForGridPos.transform.position.y, originalCubeForGridPos.transform.position.z + (newCubeScaleZ / 2) + ((newCubeScaleZ) * (i / gridRange))), originalCubeForGrid.transform.rotation);
+            GameObject newCube = GameObject.Instantiate(CubeForGridToReplicate, new Vector3(originalCubeForGridPos.transform.position.x + (newCubeScaleX / 2) + ((newCubeScaleX) * (i % subdivisions)), originalCubeForGridPos.transform.position.y, originalCubeForGridPos.transform.position.z + (newCubeScaleZ / 2) + ((newCubeScaleZ) * (i / subdivisions))), originalCubeForGrid.transform.rotation);
             newCube.transform.localScale = new Vector3(newCubeScaleX, newCube.transform.localScale.y, newCubeScaleZ);
             newCube.GetComponent<GridLogic2>().SetCountersFromData();
             grid.Add(newCube);
@@ -201,6 +200,14 @@ public class LoadVisualData : MonoBehaviour
         }
 
         ResetMaxCounters();
+    }
+
+    private void GridUpdate()
+    {
+        subdivisions = (int)subdivisionsSlider.value;
+        subdivisionsText.text = ("Subdivisions: " + subdivisions.ToString());
+        ResetGrid();
+        CreateNewGrid();
     }
 
     private void ResetMaxCounters()
@@ -255,17 +262,13 @@ public class LoadVisualData : MonoBehaviour
             }
         }
 
+        //IMPORATNT! This is necesary because this is in the update, but it shouldn't be in the update, this should be a function that only plays one time. Don't know if this could provoke a bug because these vars are used in more places.
         killEnemyEnabled = false;
         deathEnabled = false;
         hitEnable = false;
         pathEnabled = false;
     }
 
-    void CurrentGameChanged()
-    {
-        currentData = saveFile.all_games.games[currentGameDropdown.value];
-        UpdateAllData();
-    }
 
     private void UpdateAllData()
     {
@@ -280,7 +283,11 @@ public class LoadVisualData : MonoBehaviour
             current.GetComponent<GridLogic2>().SetColorFromMaxData();
         }
     }
-
+    void CurrentGameChanged()
+    {
+        currentData = saveFile.all_games.games[currentGameDropdown.value];
+        UpdateAllData();
+    }
     void ShowAllGamesChanged()
     {
         if(showAllGames.isOn)
@@ -313,6 +320,7 @@ public class LoadVisualData : MonoBehaviour
 
         }
     }
+
     //void OnDrawGizmos()
     //{
     //    // Draw a yellow sphere at the transform's position

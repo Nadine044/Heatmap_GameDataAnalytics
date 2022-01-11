@@ -18,6 +18,61 @@ public class GridLogic2 : MonoBehaviour
         SetColorFromMaxData();
     }
 
+
+
+    private void ResetCounters()
+    {
+        deathsCount = 0;
+        hitsCount = 0;
+        killsCount = 0;
+        pathCount = 0;
+    }
+
+    public void SetCountersFromData()
+    {
+        ResetCounters();
+
+        foreach (Vector3 pos in visualData.currentData.kill_pos)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
+            foreach (Collider col in hitColliders)
+            {
+                if (col.gameObject == this.gameObject)
+                    ++killsCount;
+            }
+        }
+
+        foreach (Vector3 pos in visualData.currentData.death_pos)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
+            foreach (Collider col in hitColliders)
+            {
+                if (col.gameObject == this.gameObject)
+                    ++deathsCount;
+            }
+        }
+
+        foreach (Vector3 pos in visualData.currentData.hit_pos)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
+            foreach (Collider col in hitColliders)
+            {
+                if (col.gameObject == this.gameObject)
+                    ++hitsCount;
+            }
+        }
+
+        foreach (Vector3 pos in visualData.currentData.path_pos)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
+            foreach (Collider col in hitColliders)
+            {
+                if (col.gameObject == this.gameObject)
+                    ++pathCount;
+            }
+        }
+    }
+
     public void SetColorFromMaxData()
     {
         if (visualData.deathEnabled)
@@ -86,65 +141,6 @@ public class GridLogic2 : MonoBehaviour
                 blue -= ((r - 0.5f) * 2);
             }
             GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
-        }
-    }
-
-    private void ResetCounters()
-    {
-        deathsCount = 0;
-        hitsCount = 0;
-        killsCount = 0;
-        pathCount = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void SetCountersFromData()
-    {
-        ResetCounters();
-
-        foreach (Vector3 pos in visualData.currentData.kill_pos)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
-            foreach (Collider col in hitColliders)
-            {
-                if (col.gameObject == this.gameObject)
-                    ++killsCount;
-            }
-        }
-
-        foreach (Vector3 pos in visualData.currentData.death_pos)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
-            foreach (Collider col in hitColliders)
-            {
-                if (col.gameObject == this.gameObject)
-                    ++deathsCount;
-            }
-        }
-
-        foreach (Vector3 pos in visualData.currentData.hit_pos)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
-            foreach (Collider col in hitColliders)
-            {
-                if (col.gameObject == this.gameObject)
-                    ++hitsCount;
-            }
-        }
-
-        foreach (Vector3 pos in visualData.currentData.path_pos)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
-            foreach (Collider col in hitColliders)
-            {
-                if (col.gameObject == this.gameObject)
-                    ++pathCount;
-            }
         }
     }
 }
