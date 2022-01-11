@@ -15,7 +15,7 @@ public class LoadVisualData : MonoBehaviour
     public GameObject killEnemy;
     public GameObject path;
     public GameObject arrow;
-
+    public List<GameObject> pathsInstantiates = new List<GameObject>();
     public GameObject CubeForGridToReplicate;
 
     //------ Data ------
@@ -101,7 +101,7 @@ public class LoadVisualData : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        //LoadVisualData_Assets();
+        LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
 
@@ -116,16 +116,27 @@ public class LoadVisualData : MonoBehaviour
 
                 if (i <= frontPathLines.Count)
                 {
-                    Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), transform.rotation);
+                    //Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), transform.rotation);
                     arrowsEnabled = false;
                 }
             }
         }
     }
+    void ResetInstantiates()
+    {
+        if (pathsInstantiates.Count != 0)
+        {
+            foreach (GameObject go in pathsInstantiates)
+                Destroy(go);
+
+            pathsInstantiates.Clear();
+        }
+        
+    }
     private void ChangeMode()
     {
         currentMode = (Mode)currentModeDropdown.value;
-
+        ResetInstantiates();
         switch (currentMode)
         {
             case Mode.death:
@@ -262,7 +273,7 @@ public class LoadVisualData : MonoBehaviour
 
     public void LoadVisualData_Assets()
     {
-        if (currentData.kill_pos != null && killEnemyEnabled) 
+        /*if (currentData.kill_pos != null && killEnemyEnabled) 
         {
             for (int i = 0; i < currentData.kill_pos.Count; i++)
                 Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation);
@@ -279,28 +290,30 @@ public class LoadVisualData : MonoBehaviour
         {
             for (int i = 0; i < currentData.death_pos.Count; i++)
                 Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation);
-        }
+        }*/
 
         if (currentData.paths != null && pathEnabled)
         {
-
-            for (int i = 0; i < currentData.paths.Count; i++)
+            for(int x = 0; x < currentData.paths.Count; ++x)
             {
-                frontPoint = currentData.paths[0].path[i];
-                frontPathLines.Add(frontPoint);
-
-                if (i == 0)
+                for (int i = 0; i < currentData.paths[x].pathPositions.Count; i++)
                 {
-                    backPoint = frontPoint;
-                    backPathLines.Add(backPoint);
-                }
-                else
-                {
-                    backPoint = currentData.paths[0].path[i - 1];
-                    backPathLines.Add(backPoint);
-                }
+                    frontPoint = currentData.paths[x].pathPositions[i];
+                    frontPathLines.Add(frontPoint);
 
-                Instantiate(path, new Vector3(currentData.paths[0].path[i].x, currentData.paths[0].path[i].y + 2.0f, currentData.paths[0].path[i].z), transform.rotation);
+                    if (i == 0)
+                    {
+                        backPoint = frontPoint;
+                        backPathLines.Add(backPoint);
+                    }
+                    else
+                    {
+                        backPoint = currentData.paths[x].pathPositions[i - 1];
+                        backPathLines.Add(backPoint);
+                    }
+
+                    pathsInstantiates.Add(Instantiate(path, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation));
+                }
             }
         }
 

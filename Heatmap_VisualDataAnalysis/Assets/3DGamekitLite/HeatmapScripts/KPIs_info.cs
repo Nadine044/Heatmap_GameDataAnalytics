@@ -34,5 +34,5 @@ public class KPIs_Games
 [System.Serializable]
 public class PlayerPath
 {
-    public List<Vector3> path = new List<Vector3>();
+    public List<Vector3> pathPositions = new List<Vector3>();
 }

@@ -69,7 +69,7 @@ public class GridLogic2 : MonoBehaviour
 
         foreach (PlayerPath path in visualData.currentData.paths)
         {
-            foreach (Vector3 pos in path.path)
+            foreach (Vector3 pos in path.pathPositions)
             {
                 Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
                 foreach (Collider col in hitColliders)

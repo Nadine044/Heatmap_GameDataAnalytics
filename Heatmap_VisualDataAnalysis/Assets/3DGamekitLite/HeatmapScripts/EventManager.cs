@@ -67,7 +67,7 @@ public class EventManager : MonoBehaviour
 
     void SavePath()
     {
-        data.all_data.paths[data.all_data.paths.Count - 1].path.Add(ellen.transform.position);
+        data.all_data.paths[data.all_data.paths.Count - 1].pathPositions.Add(ellen.transform.position);
     }
 
     void SaveDeathAcidData()
