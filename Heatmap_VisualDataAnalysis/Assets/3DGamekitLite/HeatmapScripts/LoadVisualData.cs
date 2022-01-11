@@ -48,6 +48,7 @@ public class LoadVisualData : MonoBehaviour
 
     public Dropdown currentGameDropdown;
     List<string> DropGames = new List<string>();
+    public Toggle showAllGames;
 
     Vector3 frontPoint = Vector3.zero;
     Vector3 backPoint = Vector3.zero;
@@ -74,7 +75,8 @@ public class LoadVisualData : MonoBehaviour
         }
 
         currentGameDropdown.AddOptions(DropGames);
-        currentGameDropdown.onValueChanged.AddListener(delegate { DropdownValueChanged();});
+        currentGameDropdown.onValueChanged.AddListener(delegate { CurrentGameChanged();});
+        showAllGames.onValueChanged.AddListener(delegate { ShowAllGamesChanged(); });
     }
 
     // Update is called once per frame
@@ -259,9 +261,14 @@ public class LoadVisualData : MonoBehaviour
         pathEnabled = false;
     }
 
-    void DropdownValueChanged()
+    void CurrentGameChanged()
     {
         currentData = saveFile.all_games.games[currentGameDropdown.value];
+        UpdateAllData();
+    }
+
+    private void UpdateAllData()
+    {
         ResetMaxCounters();
         foreach (GameObject current in grid)
         {
@@ -271,6 +278,39 @@ public class LoadVisualData : MonoBehaviour
         foreach (GameObject current in grid) //Needed before set all the data and the max from all and then we can put the correct color for each one.
         {
             current.GetComponent<GridLogic2>().SetColorFromMaxData();
+        }
+    }
+
+    void ShowAllGamesChanged()
+    {
+        if(showAllGames.isOn)
+        {
+            currentGameDropdown.interactable = false;
+
+            currentData = new KPIs_info();
+            foreach (KPIs_info data in saveFile.all_games.games)
+            {
+                foreach (Vector3 deathPos in data.death_pos)
+                    currentData.death_pos.Add(deathPos);
+
+                foreach (Vector3 hitPos in data.hit_pos)
+                    currentData.hit_pos.Add(hitPos);
+
+                foreach (Vector3 killPos in data.kill_pos)
+                    currentData.kill_pos.Add(killPos);
+
+                foreach (Vector3 pathPos in data.path_pos)
+                    currentData.path_pos.Add(pathPos);
+            }
+
+            UpdateAllData();
+        }
+        else
+        {
+            currentGameDropdown.interactable = true;
+
+            CurrentGameChanged();
+
         }
     }
     //void OnDrawGizmos()

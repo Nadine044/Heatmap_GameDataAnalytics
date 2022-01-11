@@ -20,9 +20,13 @@ public class GridLogic2 : MonoBehaviour
 
     public void SetColorFromMaxData()
     {
-        if (visualData.MaxDeathsCount > 0 && visualData.deathEnabled)
+        if (visualData.deathEnabled)
         {
-            float r = (float)deathsCount / visualData.MaxDeathsCount; // between 0 and 1 (min and max)
+            float r;
+            if (visualData.MaxDeathsCount != 0)
+                r = (float)deathsCount / visualData.MaxDeathsCount; // between 0 and 1 (min and max)
+            else
+                r = 0;
             float red = (r * 2);
             if (red > 1)
                 red = 1;
@@ -33,10 +37,13 @@ public class GridLogic2 : MonoBehaviour
             }
             GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
-        else if (visualData.MaxHitsCount > 0 && visualData.hitEnable)
+        else if (visualData.hitEnable)
         {
-            float r = (float)hitsCount / visualData.MaxHitsCount; // between 0 and 1 (min and max)
-            float red = (r * 2);
+            float r;
+            if (visualData.MaxHitsCount != 0)
+                r = (float)hitsCount / visualData.MaxHitsCount; // between 0 and 1 (min and max)
+            else
+                r = 0; float red = (r * 2);
             if (red > 1)
                 red = 1;
             float blue = 1;
@@ -46,10 +53,13 @@ public class GridLogic2 : MonoBehaviour
             }
             GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
-        else if (visualData.MaxKillsCount > 0 && visualData.killEnemyEnabled)
+        else if (visualData.killEnemyEnabled)
         {
-            float r = (float)killsCount / visualData.MaxKillsCount; // between 0 and 1 (min and max)
-            float red = (r * 2);
+            float r;
+            if (visualData.MaxKillsCount != 0)
+                r = (float)killsCount / visualData.MaxKillsCount; // between 0 and 1 (min and max)
+            else
+                r = 0; float red = (r * 2);
             if (red > 1)
                 red = 1;
             float blue = 1;
@@ -59,12 +69,17 @@ public class GridLogic2 : MonoBehaviour
             }
             GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
-        else if (visualData.MaxPathCount > 0 && visualData.pathEnabled)
+        else if (visualData.pathEnabled)
         {
-            float r = (float)pathCount / visualData.MaxPathCount; // between 0 and 1 (min and max)
-            float red = (r * 2);
+            float r;
+            if (visualData.MaxPathCount != 0)
+                r = (float)pathCount / visualData.MaxPathCount; // between 0 and 1 (min and max)
+            else
+                r = 0; float red = (r * 2);
+
             if (red > 1)
                 red = 1;
+
             float blue = 1;
             if (r - 0.5 > 0)
             {
