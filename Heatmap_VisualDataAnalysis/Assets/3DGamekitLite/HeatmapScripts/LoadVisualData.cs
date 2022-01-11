@@ -99,33 +99,16 @@ public class LoadVisualData : MonoBehaviour
         subdivisionsSlider.onValueChanged.AddListener(delegate { GridUpdate(); });
 
         CreateNewGrid();
+        LoadVisualData_Assets();
+
     }
 
     // Update is called once per frame
     public void Update()
     {
-        LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
-        if (arrowsEnabled)
-        {
-            for (int i = 0; i < allPathBalls.Count; i++)
-            {
-                GameObject go = Instantiate(arrow, new Vector3(allPathBalls[i].transform.position.x, allPathBalls[i].transform.position.y, allPathBalls[i].transform.position.z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
-                
-                if (i + 1 >= allPathBalls.Count)
-                {
-                    Debug.Log("No more arrows to draw");
-                }
-                else
-                {
-                    go.transform.LookAt(new Vector3(allPathBalls[i + 1].transform.position.x, allPathBalls[i + 1].transform.position.y, allPathBalls[i + 1].transform.position.z));
-                }
-                
-                arrows.Add(go);
-                arrowsEnabled = false;
-            }
-        }
+        
     }
     void ResetInstantiates()
     {
@@ -212,6 +195,7 @@ public class LoadVisualData : MonoBehaviour
         foreach (GameObject cube in grid)
             cube.GetComponent<GridLogic2>().SetColorFromMaxData();
 
+        LoadVisualData_Assets();
     }
     private void CreateNewGrid()
     {
@@ -303,28 +287,54 @@ public class LoadVisualData : MonoBehaviour
 
         if (currentData.paths != null && pathEnabled)
         {
-            for(int x = 0; x < currentData.paths.Count; ++x)
+            InstantiateBalls();
+        }
+
+        if (arrowsEnabled)
+        {
+            for (int i = 0; i < allPathBalls.Count; i++)
             {
-                for (int i = 0; i < currentData.paths[x].pathPositions.Count; i++)
+                GameObject go = Instantiate(arrow, new Vector3(allPathBalls[i].transform.position.x, allPathBalls[i].transform.position.y, allPathBalls[i].transform.position.z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
+
+                if (i + 1 >= allPathBalls.Count)
                 {
-                    GameObject balls_go = Instantiate(ball, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
-                    balls_go.SetActive(false);
-                    allPathBalls.Add(balls_go);
+                    Debug.Log("No more arrows to draw");
                 }
+                else
+                {
+                    go.transform.LookAt(new Vector3(allPathBalls[i + 1].transform.position.x, allPathBalls[i + 1].transform.position.y, allPathBalls[i + 1].transform.position.z));
+                }
+
+                arrows.Add(go);
             }
         }
 
         //IMPORATNT! This is necesary because this is in the update, but it shouldn't be in the update, this should be a function that only plays one time. Don't know if this could provoke a bug because these vars are used in more places.
-        killEnemyEnabled = false;
-        deathEnabled = false;
-        hitEnable = false;
-        pathEnabled = false;
+        //killEnemyEnabled = false;
+        //deathEnabled = false;
+        //hitEnable = false;
+        //pathEnabled = false;
+        //arrowsEnabled = false;
     }
 
+    private void InstantiateBalls()
+    {
+        for (int x = 0; x < currentData.paths.Count; ++x)
+        {
+            for (int i = 0; i < currentData.paths[x].pathPositions.Count; i++)
+            {
+                GameObject balls_go = Instantiate(ball, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
+                balls_go.SetActive(false);
+                allPathBalls.Add(balls_go);
+            }
+        }
+    }
 
     private void UpdateAllData()
     {
+        ResetInstantiates();
         ResetMaxCounters();
+
         foreach (GameObject current in grid)
         {
             current.GetComponent<GridLogic2>().SetCountersFromData();
@@ -334,6 +344,8 @@ public class LoadVisualData : MonoBehaviour
         {
             current.GetComponent<GridLogic2>().SetColorFromMaxData();
         }
+
+        LoadVisualData_Assets();
     }
     void CurrentGameChanged()
     {
@@ -366,9 +378,10 @@ public class LoadVisualData : MonoBehaviour
 
                 foreach (Vector3 fallPos in data.fall_pos)
                     currentData.fall_pos.Add(fallPos);
-            }
 
-            UpdateAllData();
+                UpdateAllData();
+
+            }
         }
         else
         {
@@ -377,6 +390,8 @@ public class LoadVisualData : MonoBehaviour
             CurrentGameChanged();
 
         }
+
+
     }
 
     //void OnDrawGizmos()
