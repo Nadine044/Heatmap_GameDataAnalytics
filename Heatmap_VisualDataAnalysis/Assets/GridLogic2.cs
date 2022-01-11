@@ -74,6 +74,14 @@ public class GridLogic2 : MonoBehaviour
         }
     }
 
+    private void ResetCounters()
+    {
+        deathsCount = 0;
+        hitsCount = 0;
+        killsCount = 0;
+        pathCount = 0;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -82,6 +90,8 @@ public class GridLogic2 : MonoBehaviour
 
     public void SetCountersFromData()
     {
+        ResetCounters();
+
         foreach (Vector3 pos in visualData.currentData.kill_pos)
         {
             Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);

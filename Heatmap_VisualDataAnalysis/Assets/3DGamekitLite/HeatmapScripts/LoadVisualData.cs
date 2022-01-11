@@ -32,7 +32,7 @@ public class LoadVisualData : MonoBehaviour
     public int MaxPathCount = 0;
 
     //[HideInInspector]
-    public SaveAndLoad info;
+    public SaveAndLoad saveFile;
 
     public bool deathEnabled = true;
     public bool hitEnable = false;
@@ -46,19 +46,19 @@ public class LoadVisualData : MonoBehaviour
 
     public KPIs_info currentData;
 
-    public Dropdown currentGame;
+    public Dropdown currentGameDropdown;
     List<string> DropGames = new List<string>();
 
     Vector3 frontPoint = Vector3.zero;
     Vector3 backPoint = Vector3.zero;
 
-    private void Awake()
+    private void Start()
     {
         grid = new List<GameObject>();
 
-        info.LoadFromJson();
-        currentGame.ClearOptions();
-        if (info.all_games.games.Count == 0)
+        saveFile.LoadFromJson();
+        currentGameDropdown.ClearOptions();
+        if (saveFile.all_games.games.Count == 0)
         {
             Debug.Log("No games are saved!!");
 
@@ -66,19 +66,21 @@ public class LoadVisualData : MonoBehaviour
         }
         else
         {
-            foreach (KPIs_info gameIterator in info.all_games.games)
+            foreach (KPIs_info gameIterator in saveFile.all_games.games)
             {
-                DropGames.Add("Game Number" + gameIterator.game_number.ToString());
+                DropGames.Add("Game Number " + gameIterator.game_number.ToString());
             }
+            currentData = saveFile.all_games.games[0]; //Load by default the first one.
         }
 
-        currentGame.AddOptions(DropGames);
+        currentGameDropdown.AddOptions(DropGames);
+        currentGameDropdown.onValueChanged.AddListener(delegate { DropdownValueChanged();});
     }
 
     // Update is called once per frame
     public void Update()
     {
-        LoadVisualData_Assets();
+        //LoadVisualData_Assets();
         //frontPathLines and backPathLines lists already full after this previous function
 
         if (gridRange != gridRangeOld)
@@ -168,19 +170,23 @@ public class LoadVisualData : MonoBehaviour
             newCube.transform.localScale = new Vector3(newCubeScaleX, newCube.transform.localScale.y, newCubeScaleZ);
             newCube.GetComponent<GridLogic2>().SetCountersFromData();
             grid.Add(newCube);
-
-            if (newCube.GetComponent<GridLogic2>().deathsCount > MaxDeathsCount)
-                MaxDeathsCount = newCube.GetComponent<GridLogic2>().deathsCount;
-
-            if (newCube.GetComponent<GridLogic2>().hitsCount > MaxHitsCount)
-                MaxHitsCount = newCube.GetComponent<GridLogic2>().hitsCount;
-
-            if (newCube.GetComponent<GridLogic2>().killsCount > MaxKillsCount)
-                MaxKillsCount = newCube.GetComponent<GridLogic2>().killsCount;
-
-            if (newCube.GetComponent<GridLogic2>().pathCount > MaxPathCount)
-                MaxPathCount = newCube.GetComponent<GridLogic2>().pathCount;
+            SetMaxCounters(newCube);
         }
+    }
+
+    private void SetMaxCounters(GameObject cube)
+    {
+        if (cube.GetComponent<GridLogic2>().deathsCount > MaxDeathsCount)
+            MaxDeathsCount = cube.GetComponent<GridLogic2>().deathsCount;
+
+        if (cube.GetComponent<GridLogic2>().hitsCount > MaxHitsCount)
+            MaxHitsCount = cube.GetComponent<GridLogic2>().hitsCount;
+
+        if (cube.GetComponent<GridLogic2>().killsCount > MaxKillsCount)
+            MaxKillsCount = cube.GetComponent<GridLogic2>().killsCount;
+
+        if (cube.GetComponent<GridLogic2>().pathCount > MaxPathCount)
+            MaxPathCount = cube.GetComponent<GridLogic2>().pathCount;
     }
 
     private void ResetGrid()
@@ -192,6 +198,11 @@ public class LoadVisualData : MonoBehaviour
             grid.Clear();
         }
 
+        ResetMaxCounters();
+    }
+
+    private void ResetMaxCounters()
+    {
         MaxDeathsCount = 0;
         MaxHitsCount = 0;
         MaxKillsCount = 0;
@@ -246,6 +257,21 @@ public class LoadVisualData : MonoBehaviour
         deathEnabled = false;
         hitEnable = false;
         pathEnabled = false;
+    }
+
+    void DropdownValueChanged()
+    {
+        currentData = saveFile.all_games.games[currentGameDropdown.value];
+        ResetMaxCounters();
+        foreach (GameObject current in grid)
+        {
+            current.GetComponent<GridLogic2>().SetCountersFromData();
+            SetMaxCounters(current);
+        }
+        foreach (GameObject current in grid) //Needed before set all the data and the max from all and then we can put the correct color for each one.
+        {
+            current.GetComponent<GridLogic2>().SetColorFromMaxData();
+        }
     }
     //void OnDrawGizmos()
     //{

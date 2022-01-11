@@ -1606,7 +1606,7 @@ MonoBehaviour:
   MaxHitsCount: 0
   MaxKillsCount: 0
   MaxPathCount: 0
-  info: {fileID: 555772295}
+  saveFile: {fileID: 555772295}
   deathEnabled: 1
   hitEnable: 0
   killEnemyEnabled: 0
@@ -1620,7 +1620,7 @@ MonoBehaviour:
     death_pos: []
     path_pos: []
     game_number: -1
-  currentGame: {fileID: 250476386}
+  currentGameDropdown: {fileID: 250476386}
 --- !u!1 &372184480
 GameObject:
   m_ObjectHideFlags: 0
