@@ -1874,6 +1874,7 @@ MonoBehaviour:
     type: 3}
   path: {fileID: 2222271104742070094, guid: a0570157af610bd4a8171d9241b075bd, type: 3}
   arrow: {fileID: 3245333838228497933, guid: 63c12976314d40542be48bbf236cfa36, type: 3}
+  pathsInstantiates: []
   CubeForGridToReplicate: {fileID: 255511674}
   currentData:
     kill_pos: []
@@ -1984,13 +1985,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372184480}
-  m_LocalRotation: {x: 0.2588194, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 11.36, y: 29.84, z: -34.05}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 29.8, y: 82.4, z: 0.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &388622405
 GameObject:
   m_ObjectHideFlags: 0
