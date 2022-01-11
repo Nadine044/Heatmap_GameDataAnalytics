@@ -30,12 +30,7 @@ public class LoadVisualData : MonoBehaviour
     public SaveAndLoad saveFile;
 
     //Arrows
-    public List<Vector3> frontPathLines;
-    public List<Vector3> backPathLines;
     public List<GameObject> allPathBalls;
-
-    Vector3 frontPoint = Vector3.zero;
-    Vector3 backPoint = Vector3.zero;
 
     //For the grid
     [Range(1, 30)]
@@ -114,21 +109,21 @@ public class LoadVisualData : MonoBehaviour
 
         if (arrowsEnabled)
         {
-            for (int i = 0; i < frontPathLines.Count; i++)
+            for (int i = 0; i < allPathBalls.Count; i++)
             {
-                    GameObject go = Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
-                    
-                    if (i + 1 >= allPathBalls.Count)
-                    {
-                        Debug.Log("No more arrows to draw");
-                    }
-                    else
-                    {
-                        go.transform.LookAt(new Vector3(allPathBalls[i + 1].transform.position.x, allPathBalls[i + 1].transform.position.y, allPathBalls[i + 1].transform.position.z));
-                    }
-
-                    arrows.Add(go);
-                    arrowsEnabled = false;
+                GameObject go = Instantiate(arrow, new Vector3(allPathBalls[i].transform.position.x, allPathBalls[i].transform.position.y, allPathBalls[i].transform.position.z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
+                
+                if (i + 1 >= allPathBalls.Count)
+                {
+                    Debug.Log("No more arrows to draw");
+                }
+                else
+                {
+                    go.transform.LookAt(new Vector3(allPathBalls[i + 1].transform.position.x, allPathBalls[i + 1].transform.position.y, allPathBalls[i + 1].transform.position.z));
+                }
+                
+                arrows.Add(go);
+                arrowsEnabled = false;
             }
         }
     }
@@ -144,8 +139,6 @@ public class LoadVisualData : MonoBehaviour
 
             allPathBalls.Clear();
             arrows.Clear();
-            frontPathLines.Clear();
-            backPathLines.Clear();
         }
         
     }
@@ -314,21 +307,8 @@ public class LoadVisualData : MonoBehaviour
             {
                 for (int i = 0; i < currentData.paths[x].pathPositions.Count; i++)
                 {
-                    frontPoint = currentData.paths[x].pathPositions[i];
-                    frontPathLines.Add(frontPoint);
-
-                    if (i == 0)
-                    {
-                        backPoint = frontPoint;
-                        backPathLines.Add(backPoint);
-                    }
-                    else
-                    {
-                        backPoint = currentData.paths[x].pathPositions[i - 1];
-                        backPathLines.Add(backPoint);
-                    }
-
                     GameObject balls_go = Instantiate(ball, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
+                    balls_go.SetActive(false);
                     allPathBalls.Add(balls_go);
                 }
             }
