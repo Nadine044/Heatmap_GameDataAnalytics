@@ -7,7 +7,7 @@ public class SaveAndLoad : MonoBehaviour
 {
     public KPIs_info all_data = new KPIs_info();
     public KPIs_Games all_games = new KPIs_Games();
-    public void Start()
+    public void Awake()
     {
         LoadFromJson();
         all_data.game_number = 1 + all_games.games.Count;

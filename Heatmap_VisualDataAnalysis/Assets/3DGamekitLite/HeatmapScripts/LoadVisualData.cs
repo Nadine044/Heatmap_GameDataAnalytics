@@ -7,15 +7,22 @@ using System.IO;
 public class LoadVisualData : MonoBehaviour
 {
     enum Mode { death = 0, hit, killEnemy, path, acid, fall }
-
+    //enum Visibility { death, hits, kills, paths, acidDeaths, fallDeaths }
 
     //------ Prefabs to instantiate ------
     public GameObject skull;
     public GameObject hit;
     public GameObject killEnemy;
-    public GameObject path;
+    public GameObject ball;
     public GameObject arrow;
-    public List<GameObject> pathsInstantiates = new List<GameObject>();
+
+    List<GameObject> arrows = new List<GameObject>();
+    //List<GameObject> deaths = new List<GameObject>();
+    //List<GameObject> arrows = new List<GameObject>();
+    //List<GameObject> arrows = new List<GameObject>();
+    //List<GameObject> arrows = new List<GameObject>();
+    //List<GameObject> arrows = new List<GameObject>();
+
     public GameObject CubeForGridToReplicate;
 
     //------ Data ------
@@ -74,7 +81,6 @@ public class LoadVisualData : MonoBehaviour
     {
         grid = new List<GameObject>();
 
-        saveFile.LoadFromJson();
         currentGameDropdown.ClearOptions();
         if (saveFile.all_games.games.Count == 0)
         {
@@ -110,15 +116,9 @@ public class LoadVisualData : MonoBehaviour
         {
             for (int i = 0; i < frontPathLines.Count; i++)
             {
-                Vector3 dir = (frontPathLines[i] - backPathLines[i]).normalized;
-                Vector3 pos = transform.TransformDirection(dir) * Vector3.Distance(frontPathLines[i], backPathLines[i]);
-                //Debug.DrawRay(frontPathLines[i] + new Vector3(0.0f, 2.0f, 0.0f), -pos, Color.green);
-
-                if (i <= frontPathLines.Count)
-                {
                     GameObject go = Instantiate(arrow, new Vector3(frontPathLines[i].x, frontPathLines[i].y + 1.5f, frontPathLines[i].z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
                     
-                    if (i + 1 == frontPathLines.Count)
+                    if (i + 1 >= allPathBalls.Count)
                     {
                         Debug.Log("No more arrows to draw");
                     }
@@ -126,19 +126,26 @@ public class LoadVisualData : MonoBehaviour
                     {
                         go.transform.LookAt(new Vector3(allPathBalls[i + 1].transform.position.x, allPathBalls[i + 1].transform.position.y, allPathBalls[i + 1].transform.position.z));
                     }
+
+                    arrows.Add(go);
                     arrowsEnabled = false;
-                }
             }
         }
     }
     void ResetInstantiates()
     {
-        if (pathsInstantiates.Count != 0)
+        if (allPathBalls.Count != 0)
         {
-            foreach (GameObject go in pathsInstantiates)
+            foreach (GameObject go in allPathBalls)
                 Destroy(go);
 
-            pathsInstantiates.Clear();
+            foreach (GameObject go in arrows)
+                Destroy(go);
+
+            allPathBalls.Clear();
+            arrows.Clear();
+            frontPathLines.Clear();
+            backPathLines.Clear();
         }
         
     }
@@ -321,9 +328,8 @@ public class LoadVisualData : MonoBehaviour
                         backPathLines.Add(backPoint);
                     }
 
-                    GameObject go = Instantiate(path, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
-                    pathsInstantiates.Add(go);
-                    allPathBalls.Add(go);
+                    GameObject balls_go = Instantiate(ball, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
+                    allPathBalls.Add(balls_go);
                 }
             }
         }
