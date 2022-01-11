@@ -6,7 +6,7 @@ using System.IO;
 
 public class LoadVisualData : MonoBehaviour
 {
-    enum Mode { death = 0, hit, killEnemy, path }
+    enum Mode { death = 0, hit, killEnemy, path, acid, fall }
 
 
     //------ Prefabs to instantiate ------
@@ -42,6 +42,9 @@ public class LoadVisualData : MonoBehaviour
     public int MaxHitsCount = 0;
     public int MaxKillsCount = 0;
     public int MaxPathCount = 0;
+    public int MaxAcidCount = 0;
+    public int MaxFallCount = 0;
+
 
     //bools mode - Maybe will not be needed with the dropdown, could be eliminated.
     public bool deathEnabled = true;
@@ -49,6 +52,9 @@ public class LoadVisualData : MonoBehaviour
     public bool killEnemyEnabled = false;
     public bool pathEnabled = false;
     public bool arrowsEnabled = false;
+    public bool acidEnabled = false;
+    public bool fallEnabled = false;
+
 
     [SerializeField] Mode currentMode = Mode.death;
 
@@ -128,6 +134,8 @@ public class LoadVisualData : MonoBehaviour
                 killEnemyEnabled = false;
                 pathEnabled = false;
                 arrowsEnabled = false;
+                acidEnabled = false;
+                fallEnabled = false;
                 break;
 
             case Mode.hit:
@@ -136,6 +144,8 @@ public class LoadVisualData : MonoBehaviour
                 killEnemyEnabled = false;
                 pathEnabled = false;
                 arrowsEnabled = false;
+                acidEnabled = false;
+                fallEnabled = false;
                 break;
 
             case Mode.killEnemy:
@@ -144,6 +154,8 @@ public class LoadVisualData : MonoBehaviour
                 killEnemyEnabled = true;
                 pathEnabled = false;
                 arrowsEnabled = false;
+                acidEnabled = false;
+                fallEnabled = false;
                 break;
 
             case Mode.path:
@@ -152,6 +164,28 @@ public class LoadVisualData : MonoBehaviour
                 killEnemyEnabled = false;
                 pathEnabled = true;
                 arrowsEnabled = true;
+                acidEnabled = false;
+                fallEnabled = false;
+                break;
+
+            case Mode.acid:
+                deathEnabled = false;
+                hitEnable = false;
+                killEnemyEnabled = false;
+                pathEnabled = false;
+                arrowsEnabled = false;
+                acidEnabled = true;
+                fallEnabled = false;
+                break;
+
+            case Mode.fall:
+                deathEnabled = false;
+                hitEnable = false;
+                killEnemyEnabled = false;
+                pathEnabled = false;
+                arrowsEnabled = false;
+                acidEnabled = false;
+                fallEnabled = true;
                 break;
         }
 
@@ -188,6 +222,12 @@ public class LoadVisualData : MonoBehaviour
 
         if (cube.GetComponent<GridLogic2>().pathCount > MaxPathCount)
             MaxPathCount = cube.GetComponent<GridLogic2>().pathCount;
+
+        if (cube.GetComponent<GridLogic2>().acidCount > MaxAcidCount)
+            MaxAcidCount = cube.GetComponent<GridLogic2>().acidCount;
+
+        if (cube.GetComponent<GridLogic2>().fallCount > MaxFallCount)
+            MaxFallCount = cube.GetComponent<GridLogic2>().fallCount;
     }
 
     private void ResetGrid()
@@ -216,6 +256,8 @@ public class LoadVisualData : MonoBehaviour
         MaxHitsCount = 0;
         MaxKillsCount = 0;
         MaxPathCount = 0;
+        MaxAcidCount = 0;
+        MaxFallCount = 0;
     }
 
     public void LoadVisualData_Assets()
@@ -239,12 +281,12 @@ public class LoadVisualData : MonoBehaviour
                 Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation);
         }
 
-        if (currentData.path_pos != null && pathEnabled)
+        if (currentData.paths != null && pathEnabled)
         {
 
-            for (int i = 0; i < currentData.path_pos.Count; i++)
+            for (int i = 0; i < currentData.paths.Count; i++)
             {
-                frontPoint = currentData.path_pos[i];
+                frontPoint = currentData.paths[0].path[i];
                 frontPathLines.Add(frontPoint);
 
                 if (i == 0)
@@ -254,11 +296,11 @@ public class LoadVisualData : MonoBehaviour
                 }
                 else
                 {
-                    backPoint = currentData.path_pos[i - 1];
+                    backPoint = currentData.paths[0].path[i - 1];
                     backPathLines.Add(backPoint);
                 }
 
-                Instantiate(path, new Vector3(currentData.path_pos[i].x, currentData.path_pos[i].y + 2.0f, currentData.path_pos[i].z), transform.rotation);
+                Instantiate(path, new Vector3(currentData.paths[0].path[i].x, currentData.paths[0].path[i].y + 2.0f, currentData.paths[0].path[i].z), transform.rotation);
             }
         }
 
@@ -306,8 +348,14 @@ public class LoadVisualData : MonoBehaviour
                 foreach (Vector3 killPos in data.kill_pos)
                     currentData.kill_pos.Add(killPos);
 
-                foreach (Vector3 pathPos in data.path_pos)
-                    currentData.path_pos.Add(pathPos);
+                foreach (PlayerPath pathPos in data.paths)
+                    currentData.paths.Add(pathPos);
+
+                foreach (Vector3 acidPos in data.acid_pos)
+                    currentData.acid_pos.Add(acidPos);
+
+                foreach (Vector3 fallPos in data.fall_pos)
+                    currentData.fall_pos.Add(fallPos);
             }
 
             UpdateAllData();

@@ -38,11 +38,11 @@ public class EventManager : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if (time >= period)
+        if (time >= period && !ellen.gameObject.GetComponent<PlayerController>().IsRespawning())
         {
-            time = time - period;
+            time = 0;
             SavePath();
-            Debug.Log("HEY, IT HAS BEEN 3 SECONDS FROM NOW ON :)");
+            Debug.Log("HEY, IT HAS BEEN 0.5 SECONDS FROM NOW ON :)");
         }
     }
 
@@ -50,6 +50,10 @@ public class EventManager : MonoBehaviour
     {
         data.all_data.hit_pos.Add(ellen.transform.position); //Save hit that kills Ellen (when she dies the program not calls the damage recive event by itself)
         data.all_data.death_pos.Add(ellen.transform.position);
+
+        //Start new path
+        PlayerPath nextPath = new PlayerPath();
+        data.all_data.paths.Add(nextPath);
     }
 
     void SaveHitData()
@@ -63,16 +67,24 @@ public class EventManager : MonoBehaviour
 
     void SavePath()
     {
-        data.all_data.path_pos.Add(ellen.transform.position);
+        data.all_data.paths[data.all_data.paths.Count - 1].path.Add(ellen.transform.position);
     }
 
     void SaveDeathAcidData()
     {
         data.all_data.acid_pos.Add(ellen.transform.position);
+
+        //Start new path
+        PlayerPath nextPath = new PlayerPath();
+        data.all_data.paths.Add(nextPath);
     }
 
     void SaveDeathFallData()
     {
         data.all_data.fall_pos.Add(ellen.transform.position);
+
+        //Start new path
+        PlayerPath nextPath = new PlayerPath();
+        data.all_data.paths.Add(nextPath);
     }
 }

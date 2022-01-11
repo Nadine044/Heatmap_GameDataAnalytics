@@ -64,7 +64,7 @@ namespace Gamekit3D
                     transform.rotation = tx.rotation;
                     yield return new WaitForSeconds(1);
                     var filename = "SS-Group-" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss") + ".png";
-                    File.WriteAllBytes(Path.Combine(path, filename), Screenshot().EncodeToPNG());
+                    File.WriteAllBytes(System.IO.Path.Combine(path, filename), Screenshot().EncodeToPNG());
                     transform.position = originP;
                     transform.rotation = originR;
                 }
@@ -76,7 +76,7 @@ namespace Gamekit3D
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             var filename = "SS-Custom-" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss") + ".png";
-            File.WriteAllBytes(Path.Combine(path, filename), Screenshot().EncodeToPNG());
+            File.WriteAllBytes(System.IO.Path.Combine(path, filename), Screenshot().EncodeToPNG());
         }
 
         [ContextMenu("Capture Screenshot Builtin")]

@@ -11,6 +11,8 @@ public class SaveAndLoad : MonoBehaviour
     {
         LoadFromJson();
         all_data.game_number = 1 + all_games.games.Count;
+        PlayerPath firstPath = new PlayerPath();
+        all_data.paths.Add(firstPath);
         //    all_data.kill_pos.Add(new Vector3(0, 13, 2));
         //    all_data.kill_pos.Add(new Vector3(235345, 13, 2));
 

@@ -8,6 +8,9 @@ public class GridLogic2 : MonoBehaviour
     public int hitsCount = 0;
     public int killsCount = 0;
     public int pathCount = 0;
+    public int acidCount = 0;
+    public int fallCount = 0;
+
 
 
     public LoadVisualData visualData;
@@ -26,6 +29,8 @@ public class GridLogic2 : MonoBehaviour
         hitsCount = 0;
         killsCount = 0;
         pathCount = 0;
+        acidCount = 0;
+        fallCount = 0;
     }
 
     public void SetCountersFromData()
@@ -62,15 +67,39 @@ public class GridLogic2 : MonoBehaviour
             }
         }
 
-        foreach (Vector3 pos in visualData.currentData.path_pos)
+        foreach (PlayerPath path in visualData.currentData.paths)
+        {
+            foreach (Vector3 pos in path.path)
+            {
+                Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
+                foreach (Collider col in hitColliders)
+                {
+                    if (col.gameObject == this.gameObject)
+                        ++pathCount;
+                }
+            }
+        }
+
+        foreach (Vector3 pos in visualData.currentData.acid_pos)
         {
             Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
             foreach (Collider col in hitColliders)
             {
                 if (col.gameObject == this.gameObject)
-                    ++pathCount;
+                    ++acidCount;
             }
         }
+
+        foreach (Vector3 pos in visualData.currentData.fall_pos)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(pos, 0.0f);
+            foreach (Collider col in hitColliders)
+            {
+                if (col.gameObject == this.gameObject)
+                    ++fallCount;
+            }
+        }
+
     }
 
     public void SetColorFromMaxData()
@@ -142,5 +171,39 @@ public class GridLogic2 : MonoBehaviour
             }
             GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
         }
+        else if (visualData.acidEnabled)
+        {
+            float r;
+            if (visualData.MaxAcidCount != 0)
+                r = (float)acidCount / visualData.MaxAcidCount; // between 0 and 1 (min and max)
+            else
+                r = 0; float red = (r * 2);
+            if (red > 1)
+                red = 1;
+            float blue = 1;
+            if (r - 0.5 > 0)
+            {
+                blue -= ((r - 0.5f) * 2);
+            }
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+        }
+        else if (visualData.fallEnabled)
+        {
+            float r;
+            if (visualData.MaxFallCount != 0)
+                r = (float)fallCount / visualData.MaxFallCount; // between 0 and 1 (min and max)
+            else
+                r = 0; float red = (r * 2);
+            if (red > 1)
+                red = 1;
+            float blue = 1;
+            if (r - 0.5 > 0)
+            {
+                blue -= ((r - 0.5f) * 2);
+            }
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+        }
+
+
     }
 }

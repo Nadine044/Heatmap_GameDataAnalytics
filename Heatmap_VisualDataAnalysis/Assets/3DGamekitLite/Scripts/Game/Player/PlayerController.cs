@@ -678,5 +678,10 @@ namespace Gamekit3D
             m_Respawning = true;
             m_Damageable.isInvulnerable = true;
         }
+
+        public bool IsRespawning()
+        {
+            return m_Respawning;
+        }
     }
 }
