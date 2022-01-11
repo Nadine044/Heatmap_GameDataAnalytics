@@ -19,11 +19,11 @@ public class LoadVisualData : MonoBehaviour
     public GameObject acid;
 
     List<GameObject> arrows = new List<GameObject>();
-    //List<GameObject> deaths = new List<GameObject>();
-    //List<GameObject> arrows = new List<GameObject>();
-    //List<GameObject> arrows = new List<GameObject>();
-    //List<GameObject> arrows = new List<GameObject>();
-    //List<GameObject> arrows = new List<GameObject>();
+    List<GameObject> deathsInstantiates = new List<GameObject>();
+    List<GameObject> hitsInstantiates = new List<GameObject>();
+    List<GameObject> killsInstantiates = new List<GameObject>();
+    List<GameObject> acidInstantiates = new List<GameObject>();
+    List<GameObject> fallInstantiates = new List<GameObject>();
 
     public GameObject CubeForGridToReplicate;
 
@@ -122,10 +122,30 @@ public class LoadVisualData : MonoBehaviour
             foreach (GameObject go in arrows)
                 Destroy(go);
 
+            foreach (GameObject go in deathsInstantiates)
+                Destroy(go);
+
+            foreach (GameObject go in hitsInstantiates)
+                Destroy(go);
+
+            foreach (GameObject go in killsInstantiates)
+                Destroy(go);
+
+            foreach (GameObject go in acidInstantiates)
+                Destroy(go);
+
+            foreach (GameObject go in fallInstantiates)
+                Destroy(go);
+
             allPathBalls.Clear();
             arrows.Clear();
+            deathsInstantiates.Clear();
+            hitsInstantiates.Clear();
+            killsInstantiates.Clear();
+            acidInstantiates.Clear();
+            fallInstantiates.Clear();
         }
-        
+
     }
     private void ChangeMode()
     {
@@ -271,32 +291,33 @@ public class LoadVisualData : MonoBehaviour
         if (currentData.kill_pos != null && killEnemyEnabled)
         {
             for (int i = 0; i < currentData.kill_pos.Count; i++)
-                Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation);
+               killsInstantiates.Add(Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation)));
+ 
         }
 
         if (currentData.hit_pos != null && hitEnable)
         {
             for (int i = 0; i < currentData.hit_pos.Count; i++)
-                Instantiate(hit, new Vector3(currentData.hit_pos[i].x, currentData.hit_pos[i].y, currentData.hit_pos[i].z), transform.rotation);
+                hitsInstantiates.Add(Instantiate(hit, new Vector3(currentData.hit_pos[i].x, currentData.hit_pos[i].y, currentData.hit_pos[i].z), transform.rotation));
         }
 
 
         if (currentData.death_pos != null && deathEnabled)
         {
             for (int i = 0; i < currentData.death_pos.Count; i++)
-                Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation);
+                deathsInstantiates.Add(Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation));
         }
 
         if (currentData.fall_pos != null && fallEnabled)
         {
             for (int i = 0; i < currentData.fall_pos.Count; i++)
-                Instantiate(fall, new Vector3(currentData.fall_pos[i].x, currentData.fall_pos[i].y + 5.0f, currentData.fall_pos[i].z), transform.rotation);
+                fallInstantiates.Add(Instantiate(fall, new Vector3(currentData.fall_pos[i].x, currentData.fall_pos[i].y + 5.0f, currentData.fall_pos[i].z), transform.rotation));
         }
 
         if (currentData.acid_pos != null && acidEnabled)
         {
             for (int i = 0; i < currentData.acid_pos.Count; i++)
-                Instantiate(acid, new Vector3(currentData.acid_pos[i].x, currentData.acid_pos[i].y, currentData.acid_pos[i].z), transform.rotation);
+                acidInstantiates.Add(Instantiate(acid, new Vector3(currentData.acid_pos[i].x, currentData.acid_pos[i].y, currentData.acid_pos[i].z), transform.rotation));
         }
 
         if (currentData.paths != null && pathEnabled)
@@ -322,13 +343,6 @@ public class LoadVisualData : MonoBehaviour
                 arrows.Add(go);
             }
         }
-
-        //IMPORATNT! This is necesary because this is in the update, but it shouldn't be in the update, this should be a function that only plays one time. Don't know if this could provoke a bug because these vars are used in more places.
-        //killEnemyEnabled = false;
-        //deathEnabled = false;
-        //hitEnable = false;
-        //pathEnabled = false;
-        //arrowsEnabled = false;
     }
 
     private void InstantiateBalls()
