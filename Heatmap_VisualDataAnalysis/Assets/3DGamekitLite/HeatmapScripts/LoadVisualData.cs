@@ -414,17 +414,21 @@ public class LoadVisualData : MonoBehaviour
                 balls_go.GetComponent<Renderer>().material.color = colors.allColors[x % colors.allColors.Count];
                 balls_go.SetActive(false);
                 allPathBalls.Add(balls_go);
+                InstantiateFlags(x, i);
 
-                for(int a = 0; a < saveFile.all_games.games.Count; ++a)
-                {
-                    if (currentData.paths[x].pathPositions[i] == saveFile.all_games.games[a].paths[saveFile.all_games.games[a].paths.Count - 1].pathPositions[saveFile.all_games.games[a].paths[saveFile.all_games.games[a].paths.Count - 1].pathPositions.Count - 1])
-                    {
-                        GameObject flag_go = Instantiate(flag, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
-                        flagInstantiates.Add(flag_go);
-                        flag_go.transform.eulerAngles = new Vector3(-90, 180, 0);
+            }
+        }
+    }
 
-                    }
-                }
+    private void InstantiateFlags(int x, int i)
+    {
+        for (int a = 0; a < saveFile.all_games.games.Count; ++a)
+        {
+            if (currentData.paths[x].pathPositions[i] == saveFile.all_games.games[a].paths[saveFile.all_games.games[a].paths.Count - 1].pathPositions[saveFile.all_games.games[a].paths[saveFile.all_games.games[a].paths.Count - 1].pathPositions.Count - 1])
+            {
+                GameObject flag_go = Instantiate(flag, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 14.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
+                flagInstantiates.Add(flag_go);
+                flag_go.transform.eulerAngles = new Vector3(-90, 180, 0);
 
             }
         }
