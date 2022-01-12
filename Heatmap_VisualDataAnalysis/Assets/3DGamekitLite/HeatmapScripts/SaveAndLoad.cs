@@ -5,8 +5,8 @@ using System.IO;
 
 public class SaveAndLoad : MonoBehaviour
 {
-    public KPIs_info all_data = new KPIs_info();
-    public KPIs_Games all_games = new KPIs_Games();
+    public KPIs_Game all_data = new KPIs_Game();
+    public SavedGames all_games = new SavedGames();
     public void Awake()
     {
         LoadFromJson();
@@ -51,7 +51,7 @@ public class SaveAndLoad : MonoBehaviour
     public void LoadFromJson()
     {
         string json = File.ReadAllText(Application.dataPath + "/KPIs_file.json");
-        all_games = JsonUtility.FromJson<KPIs_Games>(json);
+        all_games = JsonUtility.FromJson<SavedGames>(json);
         Debug.Log("FILE LOADED!");
 
         //Debug.Log(data.kill_pos[1]);

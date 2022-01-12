@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class KPIs_info
+public class KPIs_Game
 {
-    public KPIs_info()
+    public KPIs_Game()
     {
         kill_pos = new List<Vector3>();
         hit_pos = new List<Vector3>();
@@ -26,9 +26,9 @@ public class KPIs_info
 }
 
 [System.Serializable]
-public class KPIs_Games
+public class SavedGames
 {
-    public List<KPIs_info> games;
+    public List<KPIs_Game> games;
 }
 
 [System.Serializable]

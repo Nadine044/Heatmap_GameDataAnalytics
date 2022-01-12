@@ -28,7 +28,7 @@ public class LoadVisualData : MonoBehaviour
     public GameObject CubeForGridToReplicate;
 
     //------ Data ------
-    public KPIs_info currentData;
+    public KPIs_Game currentData;
     public SaveAndLoad saveFile;
 
     //Arrows
@@ -87,7 +87,7 @@ public class LoadVisualData : MonoBehaviour
         }
         else
         {
-            foreach (KPIs_info gameIterator in saveFile.all_games.games)
+            foreach (KPIs_Game gameIterator in saveFile.all_games.games)
             {
                 DropGames.Add("Game Number " + gameIterator.game_number.ToString());
             }
@@ -399,8 +399,8 @@ public class LoadVisualData : MonoBehaviour
         {
             currentGameDropdown.interactable = false;
 
-            currentData = new KPIs_info();
-            foreach (KPIs_info data in saveFile.all_games.games)
+            currentData = new KPIs_Game();
+            foreach (KPIs_Game data in saveFile.all_games.games)
             {
                 foreach (Vector3 deathPos in data.death_pos)
                     currentData.death_pos.Add(deathPos);
