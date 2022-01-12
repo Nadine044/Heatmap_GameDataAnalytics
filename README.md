@@ -15,6 +15,11 @@ The players play the original game, and when they finish the level they save the
 - L: Load data (automatic)
 - UI buttons
 
+## Instructions to execute
+- Play the game using the Example Scene located in the Assets folder
+- Save the game
+- Open the Tool Scene: Assets/3DGamekitLite/HeatmapScripts/VisualData
+
 ### License
 MIT License
 
