@@ -7,7 +7,21 @@ using System.IO;
 public class LoadVisualData : MonoBehaviour
 {
     enum Mode { death = 0, hit, killEnemy, path, acid, fall }
-    //enum Visibility { death, hits, kills, paths, acidDeaths, fallDeaths }
+
+    class ColorPool
+    {
+        public ColorPool()
+        {
+            allColors.Add(Color.blue);
+            allColors.Add(Color.green);
+            allColors.Add(Color.red);
+            allColors.Add(Color.yellow);
+            allColors.Add(Color.cyan);
+            allColors.Add(Color.magenta);
+            allColors.Add(Color.black);
+        }
+        public List<Color> allColors = new List<Color>();
+    }
 
     //------ Prefabs to instantiate ------
     public GameObject skull;
@@ -30,6 +44,7 @@ public class LoadVisualData : MonoBehaviour
     //------ Data ------
     public KPIs_Game currentData;
     public SaveAndLoad saveFile;
+    private ColorPool colors = new ColorPool();
 
     //Arrows
     public List<GameObject> allPathBalls;
@@ -364,7 +379,7 @@ public class LoadVisualData : MonoBehaviour
             for (int i = 0; i < allPathBalls.Count; i++)
             {
                 GameObject go = Instantiate(arrow, new Vector3(allPathBalls[i].transform.position.x, allPathBalls[i].transform.position.y, allPathBalls[i].transform.position.z), new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w));
-
+                go.GetComponent<Renderer>().material.color = allPathBalls[i].GetComponent<Renderer>().material.color;
                 if (i + 1 >= allPathBalls.Count)
                 {
                     Debug.Log("No more arrows to draw");
@@ -386,6 +401,7 @@ public class LoadVisualData : MonoBehaviour
             for (int i = 0; i < currentData.paths[x].pathPositions.Count; i++)
             {
                 GameObject balls_go = Instantiate(ball, new Vector3(currentData.paths[x].pathPositions[i].x, currentData.paths[x].pathPositions[i].y + 2.0f, currentData.paths[x].pathPositions[i].z), transform.rotation);
+                balls_go.GetComponent<Renderer>().material.color = colors.allColors[x % colors.allColors.Count];
                 balls_go.SetActive(false);
                 allPathBalls.Add(balls_go);
             }
