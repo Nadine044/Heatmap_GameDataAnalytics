@@ -118,33 +118,46 @@ public class LoadVisualData : MonoBehaviour
         {
             foreach (GameObject go in allPathBalls)
                 Destroy(go);
-
+        }
+        if (arrows.Count != 0)
+        {
             foreach (GameObject go in arrows)
                 Destroy(go);
-
+        }
+        if (deathsInstantiates.Count != 0)
+        {
             foreach (GameObject go in deathsInstantiates)
                 Destroy(go);
-
+        }
+        if (hitsInstantiates.Count != 0)
+        {
             foreach (GameObject go in hitsInstantiates)
                 Destroy(go);
-
+        }
+        if (killsInstantiates.Count != 0)
+        {
             foreach (GameObject go in killsInstantiates)
                 Destroy(go);
-
+        }
+        if (acidInstantiates.Count != 0)
+        {
             foreach (GameObject go in acidInstantiates)
                 Destroy(go);
-
+        }
+        if (fallInstantiates.Count != 0)
+        {
             foreach (GameObject go in fallInstantiates)
                 Destroy(go);
-
-            allPathBalls.Clear();
-            arrows.Clear();
-            deathsInstantiates.Clear();
-            hitsInstantiates.Clear();
-            killsInstantiates.Clear();
-            acidInstantiates.Clear();
-            fallInstantiates.Clear();
         }
+
+        allPathBalls.Clear();
+        arrows.Clear();
+        deathsInstantiates.Clear();
+        hitsInstantiates.Clear();
+        killsInstantiates.Clear();
+        acidInstantiates.Clear();
+        fallInstantiates.Clear();
+        
 
     }
     private void ChangeMode()
@@ -291,7 +304,7 @@ public class LoadVisualData : MonoBehaviour
         if (currentData.kill_pos != null && killEnemyEnabled)
         {
             for (int i = 0; i < currentData.kill_pos.Count; i++)
-               killsInstantiates.Add(Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation)));
+               killsInstantiates.Add(Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation));
  
         }
 
