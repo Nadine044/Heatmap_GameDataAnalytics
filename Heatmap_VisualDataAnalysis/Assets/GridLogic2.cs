@@ -15,14 +15,6 @@ public class GridLogic2 : MonoBehaviour
 
     public LoadVisualData visualData;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        SetColorFromMaxData();
-    }
-
-
-
     private void ResetCounters()
     {
         deathsCount = 0;
@@ -102,7 +94,7 @@ public class GridLogic2 : MonoBehaviour
 
     }
 
-    public void SetColorFromMaxData()
+    public void SetColorFromMaxData(float alpha)
     {
         if (visualData.deathEnabled)
         {
@@ -119,7 +111,7 @@ public class GridLogic2 : MonoBehaviour
             {
                 blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, alpha);
         }
         else if (visualData.hitEnable)
         {
@@ -135,7 +127,7 @@ public class GridLogic2 : MonoBehaviour
             {
                 blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, alpha);
         }
         else if (visualData.killEnemyEnabled)
         {
@@ -151,7 +143,7 @@ public class GridLogic2 : MonoBehaviour
             {
                 blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, alpha);
         }
         else if (visualData.pathEnabled)
         {
@@ -169,7 +161,7 @@ public class GridLogic2 : MonoBehaviour
             {
                 blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, alpha);
         }
         else if (visualData.acidEnabled)
         {
@@ -185,7 +177,7 @@ public class GridLogic2 : MonoBehaviour
             {
                 blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, alpha);
         }
         else if (visualData.fallEnabled)
         {
@@ -201,9 +193,15 @@ public class GridLogic2 : MonoBehaviour
             {
                 blue -= ((r - 0.5f) * 2);
             }
-            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, 0.75f);
+            GetComponent<Renderer>().material.color = new Color(red, 0.0f, blue, alpha);
         }
 
 
+    }
+
+    public void SetAlpha(float newAlpha)
+    {
+        Color currentColor = GetComponent<Renderer>().material.color;
+        GetComponent<Renderer>().material.color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);
     }
 }

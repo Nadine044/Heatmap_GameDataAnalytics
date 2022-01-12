@@ -60,6 +60,7 @@ public class LoadVisualData : MonoBehaviour
     public bool arrowsEnabled = false;
     public bool acidEnabled = false;
     public bool fallEnabled = false;
+    public bool showAllIconsBool = false;
 
 
     [SerializeField] Mode currentMode = Mode.death;
@@ -68,10 +69,12 @@ public class LoadVisualData : MonoBehaviour
     //------ UI elements ------
     public Dropdown currentGameDropdown;
     public Dropdown currentModeDropdown;
-    List<string> DropGames = new List<string>();
+    List<string> dropdownGames = new List<string>();
     public Toggle showAllGames;
     public Slider subdivisionsSlider;
     public Text subdivisionsText;
+    public Toggle showAllIconsToggle;
+    public Slider alphaGridSlider;
 
     //------ FUNCTIONS -------
     private void Start()
@@ -83,34 +86,45 @@ public class LoadVisualData : MonoBehaviour
         {
             Debug.Log("No games are saved!!");
 
-            DropGames = new List<string> { "No game loaded" };
+            dropdownGames = new List<string> { "No game loaded" };
         }
         else
         {
             foreach (KPIs_Game gameIterator in saveFile.all_games.games)
             {
-                DropGames.Add("Game Number " + gameIterator.game_number.ToString());
+                dropdownGames.Add("Game Number " + gameIterator.game_number.ToString());
             }
             currentData = saveFile.all_games.games[0]; //Load by default the first one.
         }
 
-        currentGameDropdown.AddOptions(DropGames);
-        currentGameDropdown.onValueChanged.AddListener(delegate { CurrentGameChanged();});
-        showAllGames.onValueChanged.AddListener(delegate { ShowAllGamesChanged(); });
-        currentModeDropdown.onValueChanged.AddListener(delegate{ ChangeMode(); });
-        subdivisionsSlider.onValueChanged.AddListener(delegate { GridUpdate(); });
+        currentGameDropdown.AddOptions(dropdownGames);
+        AddListeners();
 
         CreateNewGrid();
         LoadVisualData_Assets();
 
     }
 
-    // Update is called once per frame
-    public void Update()
+    private void AddListeners()
     {
-        //frontPathLines and backPathLines lists already full after this previous function
+        currentGameDropdown.onValueChanged.AddListener(delegate { CurrentGameChanged(); });
+        showAllGames.onValueChanged.AddListener(delegate { ShowAllGamesChanged(); });
+        currentModeDropdown.onValueChanged.AddListener(delegate { ChangeMode(); });
+        subdivisionsSlider.onValueChanged.AddListener(delegate { GridUpdate(); });
+        alphaGridSlider.onValueChanged.AddListener(delegate { SetGridAlpha(); });
+        showAllIconsToggle.onValueChanged.AddListener(delegate { ShowAllIcons(); });
+    }
 
-        
+    void ShowAllIcons()
+    {
+        ResetInstantiates();
+        showAllIconsBool = showAllIconsToggle.isOn;
+        LoadVisualData_Assets();
+    }
+    void SetGridAlpha()
+    {
+        foreach (GameObject go in grid)
+            go.GetComponent<GridLogic2>().SetAlpha(alphaGridSlider.value);
     }
     void ResetInstantiates()
     {
@@ -163,7 +177,7 @@ public class LoadVisualData : MonoBehaviour
     private void ChangeMode()
     {
         currentMode = (Mode)currentModeDropdown.value;
-        ResetInstantiates();
+
         switch (currentMode)
         {
             case Mode.death:
@@ -228,9 +242,13 @@ public class LoadVisualData : MonoBehaviour
         }
 
         foreach (GameObject cube in grid)
-            cube.GetComponent<GridLogic2>().SetColorFromMaxData();
+            cube.GetComponent<GridLogic2>().SetColorFromMaxData(alphaGridSlider.value);
 
-        LoadVisualData_Assets();
+        if (!showAllIconsBool)
+        {
+            ResetInstantiates();
+            LoadVisualData_Assets();
+        }
     }
     private void CreateNewGrid()
     {
@@ -246,6 +264,9 @@ public class LoadVisualData : MonoBehaviour
             grid.Add(newCube);
             SetMaxCounters(newCube);
         }
+
+        foreach (GameObject go in grid)
+            go.GetComponent<GridLogic2>().SetColorFromMaxData(alphaGridSlider.value);
     }
 
     private void SetMaxCounters(GameObject cube)
@@ -301,44 +322,44 @@ public class LoadVisualData : MonoBehaviour
 
     public void LoadVisualData_Assets()
     {
-        if (currentData.kill_pos != null && killEnemyEnabled)
+        if (currentData.kill_pos != null && (killEnemyEnabled || showAllIconsBool))
         {
             for (int i = 0; i < currentData.kill_pos.Count; i++)
                killsInstantiates.Add(Instantiate(killEnemy, new Vector3(currentData.kill_pos[i].x, currentData.kill_pos[i].y, currentData.kill_pos[i].z), transform.rotation));
  
         }
 
-        if (currentData.hit_pos != null && hitEnable)
+        if (currentData.hit_pos != null && (hitEnable || showAllIconsBool))
         {
             for (int i = 0; i < currentData.hit_pos.Count; i++)
                 hitsInstantiates.Add(Instantiate(hit, new Vector3(currentData.hit_pos[i].x, currentData.hit_pos[i].y, currentData.hit_pos[i].z), transform.rotation));
         }
 
 
-        if (currentData.death_pos != null && deathEnabled)
+        if (currentData.death_pos != null && (deathEnabled || showAllIconsBool))
         {
             for (int i = 0; i < currentData.death_pos.Count; i++)
                 deathsInstantiates.Add(Instantiate(skull, new Vector3(currentData.death_pos[i].x, currentData.death_pos[i].y, currentData.death_pos[i].z), transform.rotation));
         }
 
-        if (currentData.fall_pos != null && fallEnabled)
+        if (currentData.fall_pos != null && (fallEnabled || showAllIconsBool))
         {
             for (int i = 0; i < currentData.fall_pos.Count; i++)
                 fallInstantiates.Add(Instantiate(fall, new Vector3(currentData.fall_pos[i].x, currentData.fall_pos[i].y + 5.0f, currentData.fall_pos[i].z), transform.rotation));
         }
 
-        if (currentData.acid_pos != null && acidEnabled)
+        if (currentData.acid_pos != null && (acidEnabled || showAllIconsBool))
         {
             for (int i = 0; i < currentData.acid_pos.Count; i++)
                 acidInstantiates.Add(Instantiate(acid, new Vector3(currentData.acid_pos[i].x, currentData.acid_pos[i].y, currentData.acid_pos[i].z), transform.rotation));
         }
 
-        if (currentData.paths != null && pathEnabled)
+        if (currentData.paths != null && (pathEnabled || showAllIconsBool))
         {
             InstantiateBalls();
         }
 
-        if (arrowsEnabled)
+        if (arrowsEnabled || showAllIconsBool)
         {
             for (int i = 0; i < allPathBalls.Count; i++)
             {
@@ -383,7 +404,7 @@ public class LoadVisualData : MonoBehaviour
         }
         foreach (GameObject current in grid) //Needed before set all the data and the max from all and then we can put the correct color for each one.
         {
-            current.GetComponent<GridLogic2>().SetColorFromMaxData();
+            current.GetComponent<GridLogic2>().SetColorFromMaxData(alphaGridSlider.value);
         }
 
         LoadVisualData_Assets();
